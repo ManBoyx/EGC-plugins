@@ -409,6 +409,28 @@ async function main() {
     await say(a, '/mute BotA', /ne peut pas être rendu muet/);
     await say(a, '/unmute BotB', /n'est pas muet/);
   });
+  await step('/tphere : le joueur visé est amené auprès du staff', async () => {
+    moveBy(b, 'BotB', 150, 0);
+    await waitFor(() => !near(a.entity.position, b.entity.position, 30), 15000, 'BotB éloigné de BotA');
+    await sleep(800);
+    const since = b.chatLog.length;
+    await say(a, '/tphere BotB', /BotB a été téléporté auprès de vous/);
+    await expectChat(b, /téléporté auprès de BotA/, 8000, since);
+    await waitFor(() => near(a.entity.position, b.entity.position, 3), 20000, 'BotB arrivé auprès de BotA');
+  });
+  await step('/tphere refusé : soi-même, sans permission', async () => {
+    await say(a, '/tphere BotA', /vous cibler vous-même/);
+    await say(b, '/tphere BotA', /pas la permission/);
+  });
+  await step('/vanish : invisible pour les autres, puis visible de nouveau', async () => {
+    const voitA = () => b.players['BotA'] && b.players['BotA'].entity;
+    await waitFor(voitA, 15000, 'BotB voit BotA avant le vanish');
+    await say(a, '/vanish', /invisible pour les autres joueurs/);
+    await waitFor(() => !voitA(), 15000, 'BotB ne voit plus BotA');
+    await say(a, '/vanish', /de nouveau visible/);
+    await waitFor(voitA, 15000, 'BotB revoit BotA');
+  });
+  await step('/vanish refusé à un joueur sans permission', () => say(b, '/vanish', /pas la permission/));
   await step('/uc info', () => say(a, '/uc info', /Plateforme/));
   await step('/info et raccourci /rules', async () => {
     await say(a, '/info rules', /Règles du serveur/);
