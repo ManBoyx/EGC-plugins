@@ -38,7 +38,7 @@ public final class Platform {
         if (hasClass.test("io.papermc.paper.threadedregions.RegionizedServer")) {
             kind = Kind.FOLIA;
         } else if (hasClass.test("com.destroystokyo.paper.PaperConfig") || hasClass.test("io.papermc.paper.configuration.Configuration")
-            || hasClass.test("io.papermc.paper.PaperBootstrap")) {
+            || hasClass.test("io.papermc.paper.PaperBootstrap") || hasClass.test("org.github.paperspigot.PaperSpigotConfig")) {
             kind = Kind.PAPER;
         } else if (hasClass.test("org.spigotmc.SpigotConfig")) {
             kind = Kind.SPIGOT;

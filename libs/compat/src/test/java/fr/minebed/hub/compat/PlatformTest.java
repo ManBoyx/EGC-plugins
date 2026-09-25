@@ -30,6 +30,8 @@ class PlatformTest {
     void paperOldAndNewMarkers() {
         assertEquals(Platform.Kind.PAPER, detect("1.16.5-R0.1-SNAPSHOT", "x", "com.destroystokyo.paper.PaperConfig").kind());
         assertEquals(Platform.Kind.PAPER, detect("1.20.4-R0.1-SNAPSHOT", "x", "io.papermc.paper.configuration.Configuration").kind());
+        // L'ancien « PaperSpigot » de la 1.8 porte un autre nom de classe.
+        assertEquals(Platform.Kind.PAPER, detect("1.8.8-R0.1-SNAPSHOT", "x", "org.github.paperspigot.PaperSpigotConfig", "org.spigotmc.SpigotConfig").kind());
     }
 
     @Test
