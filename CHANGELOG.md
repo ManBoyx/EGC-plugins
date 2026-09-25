@@ -23,3 +23,5 @@ Premier jet d'UltimateCore et de l'infrastructure du dépôt.
 - `/pay` et `/eco` : un « début de pseudo » unique suffisait à désigner un joueur, au risque de payer la mauvaise personne.
   Le pseudo doit maintenant être exact.
 - Paper 1.8 (ancien « PaperSpigot ») était étiqueté « Spigot ».
+- `/back` ne bougeait pas sur Paper 1.16.5 : l'événement de `teleportAsync` y annonçait l'arrivée comme point de départ.
+  Pour les téléportations du plugin, le service de téléportation fait foi ; l'événement ne complète que la console.

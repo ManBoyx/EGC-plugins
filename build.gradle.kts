@@ -10,4 +10,13 @@ tasks.register<Copy>("dist") {
         from(project(path).tasks.named("shadowJar"))
     }
     into(layout.buildDirectory.dir("dist"))
+    // Somme de contrôle à publier avec les jars (voir docs/PUBLISHING.md).
+    doLast {
+        val dir = layout.buildDirectory.dir("dist").get().asFile
+        val lines = dir.listFiles { f -> f.extension == "jar" }!!.sortedBy { it.name }.map { f ->
+            val hex = java.security.MessageDigest.getInstance("SHA-256").digest(f.readBytes()).joinToString("") { "%02x".format(it) }
+            "$hex  ${f.name}"
+        }
+        File(dir, "SHA256SUMS").writeText(lines.joinToString("\n") + "\n")
+    }
 }
