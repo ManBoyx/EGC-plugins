@@ -1,0 +1,129 @@
+package fr.minebed.hub.ultimate;
+
+/**
+ * Toutes les clés de messages. Un test vérifie que chaque fichier de langue les définit toutes (et rien d'autre) :
+ * impossible d'oublier une traduction ou de laisser un message fantôme.
+ */
+public enum Msg {
+    PREFIX("prefix"),
+    NO_PERMISSION("general.no-permission"),
+    PLAYER_ONLY("general.player-only"),
+    PLAYER_NOT_FOUND("general.player-not-found"),
+    USAGE("general.usage"),
+    INTERNAL_ERROR("general.internal-error"),
+    INVALID_NUMBER("general.invalid-number"),
+    MODULE_DISABLED("general.module-disabled"),
+
+    CORE_RELOADED("core.reloaded"),
+    CORE_HELP_HEADER("core.help-header"),
+    CORE_HELP_LINE("core.help-line"),
+    CORE_INFO_LINE("core.info-line"),
+    CORE_BROADCAST("core.broadcast"),
+    CORE_SENT("core.sent"),
+
+    TP_WARMUP("teleport.warmup"),
+    TP_CANCELLED_MOVED("teleport.cancelled-moved"),
+    TP_COOLDOWN("teleport.cooldown"),
+    TP_PENDING("teleport.pending"),
+    TP_FAILED("teleport.failed"),
+    TP_WORLD_MISSING("teleport.world-missing"),
+
+    SPAWN_SET("spawn.set"),
+    SPAWN_NOT_SET("spawn.not-set"),
+    SPAWN_TELEPORTED("spawn.teleported"),
+    SPAWN_SENT("spawn.sent"),
+
+    HOME_SET("home.set"),
+    HOME_LIMIT("home.limit"),
+    HOME_NOT_FOUND("home.not-found"),
+    HOME_DELETED("home.deleted"),
+    HOME_LIST("home.list"),
+    HOME_NONE("home.none"),
+    HOME_INVALID_NAME("home.invalid-name"),
+    HOME_TELEPORTED("home.teleported"),
+
+    WARP_SET("warp.set"),
+    WARP_DELETED("warp.deleted"),
+    WARP_NOT_FOUND("warp.not-found"),
+    WARP_LIST("warp.list"),
+    WARP_NONE("warp.none"),
+    WARP_TELEPORTED("warp.teleported"),
+    WARP_INVALID_NAME("warp.invalid-name"),
+    WARP_NO_PERMISSION("warp.no-permission"),
+
+    TPA_SENT("tpa.sent"),
+    TPA_RECEIVED("tpa.received"),
+    TPA_RECEIVED_HERE("tpa.received-here"),
+    TPA_NONE("tpa.none"),
+    TPA_ACCEPTED("tpa.accepted"),
+    TPA_ACCEPTED_NOTICE("tpa.accepted-notice"),
+    TPA_DENIED("tpa.denied"),
+    TPA_DENIED_NOTICE("tpa.denied-notice"),
+    TPA_CANCELLED("tpa.cancelled"),
+    TPA_SELF("tpa.self"),
+    TPA_OFFLINE("tpa.requester-offline"),
+
+    BACK_NONE("back.none"),
+    BACK_TELEPORTED("back.teleported"),
+
+    KIT_LIST("kit.list"),
+    KIT_NONE("kit.none"),
+    KIT_NOT_FOUND("kit.not-found"),
+    KIT_NO_PERMISSION("kit.no-permission"),
+    KIT_COOLDOWN("kit.cooldown"),
+    KIT_RECEIVED("kit.received"),
+    KIT_GIVEN("kit.given"),
+    KIT_DROPPED("kit.dropped"),
+
+    ECO_BALANCE("eco.balance"),
+    ECO_BALANCE_OTHER("eco.balance-other"),
+    ECO_PAID("eco.paid"),
+    ECO_RECEIVED("eco.received"),
+    ECO_NOT_ENOUGH("eco.not-enough"),
+    ECO_INVALID_AMOUNT("eco.invalid-amount"),
+    ECO_TOO_RICH("eco.too-rich"),
+    ECO_SELF("eco.self"),
+    ECO_ADMIN_DONE("eco.admin-done"),
+    ECO_TOP_HEADER("eco.top-header"),
+    ECO_TOP_LINE("eco.top-line"),
+    ECO_TOP_EMPTY("eco.top-empty"),
+
+    CHAT_SPAM("chat.spam"),
+    CHAT_REPEAT("chat.repeat"),
+    CHAT_CAPS("chat.caps"),
+    CHAT_WORD("chat.word"),
+    CHAT_LINK("chat.link"),
+    CHAT_CLEARED("chat.cleared"),
+
+    UTIL_HEALED("util.healed"),
+    UTIL_FED("util.fed"),
+    UTIL_DONE_FOR("util.done-for"),
+    UTIL_FLY_ON("util.fly-on"),
+    UTIL_FLY_OFF("util.fly-off"),
+    UTIL_GAMEMODE("util.gamemode"),
+    UTIL_GAMEMODE_INVALID("util.gamemode-invalid"),
+    UTIL_SPEED("util.speed"),
+    UTIL_SPEED_INVALID("util.speed-invalid"),
+    UTIL_PING("util.ping"),
+    UTIL_PING_OTHER("util.ping-other"),
+    UTIL_PING_UNKNOWN("util.ping-unknown"),
+
+    JOIN_MESSAGE("join.message"),
+    JOIN_FIRST("join.first"),
+    JOIN_QUIT("join.quit"),
+    JOIN_TITLE("join.title"),
+    JOIN_SUBTITLE("join.subtitle"),
+
+    INFO_UNKNOWN("info.unknown"),
+    INFO_TOPICS("info.topics");
+
+    private final String key;
+
+    Msg(String key) {
+        this.key = key;
+    }
+
+    public String key() {
+        return key;
+    }
+}
