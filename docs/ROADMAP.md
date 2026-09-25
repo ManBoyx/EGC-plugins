@@ -12,6 +12,9 @@ Ce qui n'est **pas fait**, dit franchement.
 | Sécurité de la destination | Une téléportation vers une maison, un point de passage ou `/back` ne vérifie pas que l'endroit est encore sûr (bloc posé dessus, vide, lave). |
 | Argent | Un pseudo doit être exact pour `/pay` et `/eco` (voulu : pas de « début de pseudo » pour de l'argent). Un joueur jamais vu par le plugin ne peut pas être crédité hors ligne. |
 | Chat 1.19+ | Le filtre peut modifier le message (majuscules abaissées) ; avec le chat signé des serveurs en mode en ligne, le comportement du marquage « non sécurisé » côté client n'a **pas été vérifié** (les tests tournent en mode hors ligne). |
+| Outils de staff | `/freeze`, `/mute` et `/warn` visent des joueurs **en ligne** (jamais de recherche hors ligne : règle C7) ; seuls `/unfreeze` et `/unmute` retrouvent un joueur hors ligne, par le pseudo enregistré au moment de la sanction. Aucun bannissement : voir LibertyBans. Les actions configurables (`freeze.quit-commands`, `warn.actions`) lancent des commandes de la console : à écrire avec soin. |
+| `/ec JOUEUR` | Pas sur Folia (l'inventaire appartient à la région de l'autre joueur), et le coffre d'un joueur hors ligne n'est pas accessible. |
+| `/rtp` | Pas de coût, pas de rayon par monde, jamais dans le Nether ni l'End. La sûreté du point est une heuristique (sol plein, deux blocs libres, ni liquide, ni feu, ni feuilles…) : elle ne détecte pas tout (grottes ouvertes à l'aplomb, mobs, zones protégées d'autres plugins). |
 | Menus à inventaire | Absents : `InventoryView` est devenue une interface en 1.21 (voir `RULES.md` C3). |
 | Économie | Interne seulement ; **pas de fournisseur Vault** : les autres plugins d'économie ne la voient pas. |
 | Stockage | Fichiers YAML : adapté à un serveur moyen, pas à des dizaines de milliers de joueurs. |

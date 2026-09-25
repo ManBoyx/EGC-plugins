@@ -9,6 +9,7 @@
                        │  modules : spawn homes warps │
                        │  tpa back kits economy chat  │
                        │  utility join announcer info │
+                       │  rtp enderchest freeze staff │
                        └───────┬───────────┬─────────┘
                                │           │
                     ┌──────────▼───┐  ┌────▼──────────┐
@@ -66,6 +67,9 @@ Tout est dans `plugins/EGC-plugins/` :
 | `warps.yml`, `spawn.yml` | Points de passage, spawn |
 | `economy.yml` | Soldes en centimes, pseudos déjà vus |
 | `kit-cooldowns.yml` | Fin de recharge par joueur et par kit |
+| `freeze.yml` | Joueurs gelés (ils le restent après une reconnexion ou un redémarrage) |
+| `mutes.yml` | Joueurs muets, fin et motif |
+| `warns.yml` | Nombre d'avertissements et dernier motif par joueur |
 
 Le format d'emplacement est `monde;x;y;z;lacet;tangage` (`SavedLocation`). YAML est un choix de simplicité : un stockage
 SQLite/MySQL figure dans la feuille de route.

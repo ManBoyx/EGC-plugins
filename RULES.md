@@ -22,7 +22,8 @@ parce qu'elles n'étaient pas écrites (§2 à §6). Une règle qui n'est pas ic
   produit `IncompatibleClassChangeError` ou `NoSuchMethodError` **à l'exécution seulement**. Passer par `libs/compat`
   (`Enchants`, `Sounds`, `Materials`).
 - **C3. Pas de `InventoryView`** ni de menus à inventaire tant que `libs/compat` ne les encapsule pas : `InventoryView` est
-  devenue une interface en 1.21.
+  devenue une interface en 1.21. Exception voulue : `player.openInventory(inventaire)` (utilisé par `/ec`) est permis, car sa valeur
+  de retour est ignorée et aucune méthode de `InventoryView` n'est appelée.
 - **C4. Matériaux** : toujours par nom, via `Materials.resolve` (accepte les noms d'avant et d'après la 1.13). Pas de valeurs de
   données (« WOOL:14 »).
 - **C5. Planificateur** : uniquement `Scheduler` (`libs/compat`), jamais `Bukkit.getScheduler()` en dehors de `BukkitScheduler`.

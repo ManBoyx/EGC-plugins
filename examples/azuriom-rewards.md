@@ -13,6 +13,8 @@ kit starter {player}
 uc title {player} &6Merci !|&7Votre vote est compté
 uc sound {player} LEVEL_UP
 uc broadcast &e{player} &fa voté pour le serveur !
+rtp {player}
+alert {player} &eMerci pour votre vote !
 ```
 
 Les noms de sons et de matériaux fonctionnent quelle que soit la version du jeu (ancien ou nouveau nom).

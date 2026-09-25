@@ -14,6 +14,12 @@ Premier jet d'EGC-plugins et de l'infrastructure du dépôt.
 - Un seul jar (Java 8, API Spigot 1.8.8) pour Bukkit, Spigot, Paper et Folia, de la 1.8 à la 26.x.
 - Messages en français et en anglais ; aucune télémétrie, aucun appel réseau.
 
+**Ajouté après la première mise au point**
+- `/rtp` : téléport aléatoire vers un endroit sûr (chunk chargé sans bloquer quand c'est possible, contrôle du sol dans la région du lieu sur Folia).
+- `/ec` (`/enderchest`) : coffre de l'Ender, le sien ou celui d'un joueur en ligne (pas sur Folia).
+- Outils de staff : `/freeze` et `/unfreeze` (avec message personnalisé, titre, rappel, persistance), `/mute` et `/unmute` (durée, motif),
+  `/warn` et `/warns` (comptage, actions à seuil), `/alert` (message, titre et son), notifications au staff.
+
 **Infrastructure**
 - Modules Gradle : `libs/common`, `libs/compat`, `libs/nms`, `plugins/ultimate-core`, conventions dans `build-logic`.
 - Tests unitaires (logique pure), auto-test embarqué, test de fumée sur de vrais serveurs Paper et Folia,

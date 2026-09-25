@@ -22,6 +22,10 @@ qui tourne avec **un seul jar** sur Bukkit, Spigot, Paper et Folia, de la **1.8*
 | Connexion | (automatique) | Messages, première visite, message du jour, titre de bienvenue |
 | Annonces | (automatique) | Annonces périodiques (désactivé par défaut) |
 | Information | `/info [sujet]`, `/rules`, `/discord`, `/vote`, `/store`… | Pages écrites dans la configuration |
+| Téléport aléatoire | `/rtp [joueur]` | Endroit sûr (jamais dans l'eau, la lave, le feu ; bordure respectée), attente, temps de recharge propre |
+| Coffre de l'Ender | `/ec [joueur]` (`/enderchest`) | Celui d'un autre joueur : en ligne seulement, et **pas sur Folia** |
+| Gel | `/freeze <joueur> [message]`, `/unfreeze` | Immobilise, bloque interactions et commandes, affiche titre et message, reste gelé à la reconnexion |
+| Sanctions du staff | `/mute`, `/unmute`, `/warn`, `/warns`, `/alert` | Muet avec durée, avertissements comptés avec actions à seuil, message à l'écran d'un joueur ou de tous |
 | Noyau | `/uc help\|version\|reload\|info\|selftest\|broadcast\|title\|actionbar\|sound` | Voir « Console et récompenses » |
 
 Les commandes (`/uc`, `/ultimatecore`, `/home`…) et les permissions (`ultimatecore.*`) gardent leur nom d'origine pour rester stables : seul le nom du produit a changé.
@@ -49,6 +53,8 @@ eco give {player} 250
 uc title {player} &6Merci !|&7Votre vote est compté
 uc broadcast &e{player} &fa voté pour le serveur !
 uc sound {player} LEVEL_UP
+rtp {player}
+alert {player} &eMerci de votre soutien !
 ```
 
 Plus de détails dans [examples/azuriom-rewards.md](examples/azuriom-rewards.md).
