@@ -36,7 +36,9 @@ Chaque module se coupe dans `config.yml`. Messages en **français** et **anglais
 
 ## Installer
 
-1. Récupérez `EGC-plugins-<version>.jar` (voir « Compiler »).
+1. **Téléchargez** `EGC-plugins-<version>.jar` sur la page des [publications](https://github.com/ManBoyx/EGC-plugins/releases)
+   (ou compilez-le vous-même : voir « Compiler »). Le fichier `SHA256SUMS` de la publication permet de vérifier le téléchargement :
+   `sha256sum -c SHA256SUMS` (Linux) ou `Get-FileHash EGC-plugins-*.jar` (Windows).
 2. Déposez-le dans le dossier `plugins/` du serveur, redémarrez.
 3. Modifiez `plugins/EGC-plugins/config.yml`, puis `/uc reload`.
 4. Vérifiez : `/uc selftest` (console) doit finir par `SELFTEST RESULT: PASS`.
