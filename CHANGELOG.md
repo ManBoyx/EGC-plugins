@@ -2,6 +2,9 @@
 
 ## 0.1.0 — première version
 
+Le produit s'appelle **EGC-plugins** (plugin, jar `EGC-plugins-<version>.jar`, dépôt GitHub, préfixe `[EGC]` des messages).
+Les commandes, les permissions (`ultimatecore.*`), le nom des modules Gradle et des paquets Java n'ont pas changé.
+
 Premier jet d'EGC-plugins et de l'infrastructure du dépôt.
 
 **Plugin**

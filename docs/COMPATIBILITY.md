@@ -19,15 +19,21 @@ Date : 25 septembre 2026. Matériel : machine partagée, 2 cœurs, serveurs de t
 
 | Serveur | Java | Résultat | Joueurs simulés | Durée |
 | --- | --- | --- | --- | --- |
-| paper 1.8.8 | openjdk version "1.8.0_504" | réussi | 38/38 | 69 s |
-| paper 1.12.2 | openjdk version "1.8.0_504" | réussi | 38/38 | 68 s |
-| paper 1.16.5 | openjdk version "1.8.0_504" | réussi | 38/38 | 73 s |
-| paper 1.18.2 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 38/38 | 82 s |
-| paper 1.20.4 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 38/38 | 83 s |
-| paper 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 38/38 | 92 s |
-| paper 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 38/38 | 91 s |
-| folia 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 38/38 | 93 s |
-| folia 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 38/38 | 86 s |
+| paper 1.8.8 | openjdk version "1.8.0_504" | réussi | 38/38 | 83 s |
+| paper 1.12.2 | openjdk version "1.8.0_504" | réussi | 38/38 | 83 s |
+| paper 1.16.5 | openjdk version "1.8.0_504" | réussi | 38/38 | 91 s |
+| paper 1.18.2 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 38/38 | 95 s |
+| paper 1.20.4 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 38/38 | 98 s |
+| paper 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 38/38 | 106 s |
+| paper 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | **ÉCHEC** | 37/38 | 106 s |
+| folia 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 38/38 | 105 s |
+| folia 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 38/38 | 105 s |
+
+Lecture : une ligne « réussi » veut dire que le test de fumée est passé **et** que les 38 vérifications des joueurs simulés ont réussi.
+Cette table est celle de la **dernière** matrice complète, après le renommage en EGC-plugins. Une ligne en échec y figure telle quelle :
+sur Paper 26.1.2, une étape (`/tpa` puis `/tpaccept` : l'arrivée du joueur près de l'autre) a dépassé son délai une fois sur cette
+matrice ; deux reprises immédiates ont réussi 38/38. Je l'attribue au chargement du chunk d'arrivée sur une machine chargée (le délai du test
+a été élargi ensuite), mais je ne l'ai **pas démontré**. Auparavant, les 9 serveurs avaient tous réussi 38/38 sur la version précédente du plugin.
 
 Ce que couvre chaque essai :
 

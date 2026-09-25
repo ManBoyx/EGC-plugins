@@ -68,10 +68,28 @@ async function expectChat(bot, re, ms, since) {
   throw new Error('message attendu ' + re + ' ; reçu : ' + JSON.stringify(bot.chatLog.slice(from).slice(-8)));
 }
 
+/**
+ * Envoie un message en respectant le compteur anti-spam de Minecraft (chaque message ajoute 20, il retombe de 1 par 50 ms,
+ * expulsion au-dessus de 200) : sans cela, le test se fait expulser dès que la machine va un peu vite.
+ */
+async function send(bot, text) {
+  const now = Date.now();
+  bot.spamScore = Math.max(0, (bot.spamScore || 0) - (now - (bot.spamAt || now)) / 50);
+  while (bot.spamScore + 20 > 100) {
+    await sleep(100);
+    const t = Date.now();
+    bot.spamScore = Math.max(0, bot.spamScore - (t - bot.spamAt) / 50);
+    bot.spamAt = t;
+  }
+  bot.spamScore += 20;
+  bot.spamAt = Date.now();
+  bot.chat(text);
+}
+
 /** Envoie une commande et attend la réponse. */
 async function say(bot, text, re, ms) {
   const since = bot.chatLog.length;
-  bot.chat(text);
+  await send(bot, text);
   return expectChat(bot, re, ms, since);
 }
 
@@ -145,7 +163,7 @@ async function main() {
     await waitFor(() => a.entity.position.x > home.x + 30, 10000, 'téléporté par la console');
     await sleep(800);
     const since = a.chatLog.length;
-    a.chat('/home maison');
+    await send(a, '/home maison');
     await expectChat(a, /Téléportation dans 3 secondes/, 6000, since);
     await expectChat(a, /Bienvenue à la maison maison/, 10000, since);
     await waitFor(() => near(a.entity.position, home, 4), 6000, 'retour près de la maison');
@@ -166,11 +184,11 @@ async function main() {
   await step('chat : majuscules abaissées (vu dans le journal du serveur)', async () => {
     // Depuis la 1.19 le client lit le corps signé d'origine du message : seul le journal montre le texte publié.
     const offset = logSize();
-    a.chat('ARRETEZ DE FAIRE CA');
+    await send(a, 'ARRETEZ DE FAIRE CA');
     await expectLog(/<BotA> arretez de faire ca/, 6000, offset);
   });
   await step('chat : répétition refusée', async () => {
-    a.chat('achetez mon super grade');
+    await send(a, 'achetez mon super grade');
     await sleep(1200);
     await say(a, 'achetez mon super grade', /répéter/);
   });
@@ -199,10 +217,10 @@ async function main() {
     await say(a, '/tpa BotB', /Demande envoyée à BotB/);
     await expectChat(b, /BotA.*demande à se téléporter vers vous/, 6000);
     const since = a.chatLog.length;
-    b.chat('/tpaccept');
+    await send(b, '/tpaccept');
     await expectChat(a, /accepté votre demande/, 6000, since);
     await expectChat(a, /Téléportation dans 3 secondes/, 6000, since);
-    await waitFor(() => near(a.entity.position, b.entity.position, 4), 12000, 'BotA arrivé près de BotB');
+    await waitFor(() => near(a.entity.position, b.entity.position, 4), 25000, 'BotA arrivé près de BotB');
   });
   await step('/pay et /balance', async () => {
     await say(a, '/pay BotB 10', /Vous avez envoyé 10,00 \$ à BotB/);
@@ -296,7 +314,7 @@ async function main() {
     await say(a, '/tpahere BotB', /Demande envoyée/);
     await expectChat(b, /vous demande de vous téléporter à sa position/, 6000);
     const since = b.chatLog.length;
-    b.chat('/tpaccept');
+    await send(b, '/tpaccept');
     await expectChat(b, /Téléportation dans 3 secondes/, 6000, since);
     await waitFor(() => near(b.entity.position, a.entity.position, 4), 12000, 'BotB arrivé près de BotA');
   });

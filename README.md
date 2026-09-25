@@ -24,6 +24,7 @@ qui tourne avec **un seul jar** sur Bukkit, Spigot, Paper et Folia, de la **1.8*
 | Information | `/info [sujet]`, `/rules`, `/discord`, `/vote`, `/store`… | Pages écrites dans la configuration |
 | Noyau | `/uc help\|version\|reload\|info\|selftest\|broadcast\|title\|actionbar\|sound` | Voir « Console et récompenses » |
 
+Les commandes (`/uc`, `/ultimatecore`, `/home`…) et les permissions (`ultimatecore.*`) gardent leur nom d'origine pour rester stables : seul le nom du produit a changé.
 Chaque module se coupe dans `config.yml`. Messages en **français** et **anglais** (`lang/`), modifiables.
 **Aucune télémétrie, aucun appel réseau** : le plugin ne se connecte à rien.
 
