@@ -318,6 +318,83 @@ async function main() {
     await expectChat(b, /Téléportation dans 3 secondes/, 6000, since);
     await waitFor(() => near(b.entity.position, a.entity.position, 4), 12000, 'BotB arrivé près de BotA');
   });
+  await step('/rtp : envoi loin puis temps de recharge', async () => {
+    await sleep(6000); // fin du temps de recharge de téléportation de BotB
+    const before = b.entity.position.clone();
+    const since = b.chatLog.length;
+    await send(b, '/rtp');
+    await expectChat(b, /Recherche d'un endroit sûr/, 8000, since);
+    await expectChat(b, /Téléporté en X/, 40000, since);
+    await waitFor(() => Math.hypot(b.entity.position.x - before.x, b.entity.position.z - before.z) > 150, 20000, 'BotB loin de son point de départ');
+    await say(b, '/rtp', /Prochain téléport aléatoire/);
+  });
+  await step('console : rtp JOUEUR (sans attente ni recharge)', async () => {
+    const before = a.entity.position.clone();
+    const since = a.chatLog.length;
+    consoleCommand('rtp BotA');
+    await expectChat(a, /Téléporté en X/, 40000, since);
+    await waitFor(() => Math.hypot(a.entity.position.x - before.x, a.entity.position.z - before.z) > 150, 20000, 'BotA loin de son point de départ');
+  });
+  await step('/ec ouvre le coffre de l\'Ender', async () => {
+    await send(a, '/ec');
+    await waitFor(() => a.currentWindow, 8000, 'fenêtre ouverte');
+    a.closeWindow(a.currentWindow);
+    await sleep(300);
+  });
+  await step('/freeze : titre, message, immobilisation, commande bloquée, dégel', async () => {
+    const t0 = b.titles.length;
+    await say(a, '/freeze BotB Contrôle de triche', /BotB est gelé/);
+    await expectChat(a, /\[Staff\].*a gelé/, 6000);
+    await waitFor(() => b.titles.slice(t0).some((t) => /GELÉ/.test(t.text)), 8000, 'titre de gel reçu (reçu : ' + JSON.stringify(b.titles.slice(t0)) + ')');
+    await expectChat(b, /Contrôle de triche/, 6000);
+    const p0 = b.entity.position.clone();
+    b.setControlState('forward', true);
+    await sleep(1500);
+    b.setControlState('forward', false);
+    await sleep(700);
+    const drift = Math.hypot(b.entity.position.x - p0.x, b.entity.position.z - p0.z);
+    if (drift > 1.0) throw new Error('le joueur gelé a bougé de ' + drift.toFixed(2) + ' blocs');
+    await say(b, '/home', /commandes sont bloquées/);
+    await say(a, '/freeze BotB', /n'est plus gelé/);
+    await expectChat(b, /plus gelé/, 6000);
+    const p1 = b.entity.position.clone();
+    b.setControlState('forward', true);
+    await sleep(1200);
+    b.setControlState('forward', false);
+    const moved = Math.hypot(b.entity.position.x - p1.x, b.entity.position.z - p1.z);
+    if (moved < 2.5) throw new Error('le joueur dégelé n\'avance pas (' + moved.toFixed(2) + ' blocs)');
+  });
+  await step('/freeze refusé sur un opérateur', () => say(a, '/freeze BotA', /ne peut pas être gelé/));
+  await step('/alert : message, titre', async () => {
+    const t0 = b.titles.length;
+    await say(a, '/alert BotB Serveur bientôt redémarré', /Envoyé à 1 joueur/);
+    await expectChat(b, /\[Alerte\] Serveur bientôt redémarré/, 6000);
+    await waitFor(() => b.titles.slice(t0).some((t) => /ALERTE/.test(t.text)), 8000, 'titre d\'alerte reçu');
+  });
+  await step('/warn puis /warns', async () => {
+    const t0 = b.titles.length;
+    await say(a, '/warn BotB Insultes répétées', /Avertissement n°1 envoyé à BotB/);
+    await expectChat(b, /Avertissement n°1 : Insultes répétées/, 6000);
+    await waitFor(() => b.titles.slice(t0).some((t) => /AVERTISSEMENT/.test(t.text)), 8000, 'titre d\'avertissement reçu');
+    await say(a, '/warns BotB', /BotB.* 1 avertissement/);
+    await say(a, '/warn BotB Deuxième fois', /n°2/);
+    await say(a, '/warns BotB', /BotB.* 2 avertissement/);
+  });
+  await step('/mute : chat et messages privés bloqués, puis /unmute', async () => {
+    await say(a, '/mute BotB 1m Spam', /BotB est muet/);
+    await expectChat(b, /Vous avez été rendu muet/, 6000);
+    await say(b, 'bonjour tout le monde', /Vous êtes muet/);
+    await say(b, '/msg BotA salut', /pas utiliser cette commande/);
+    await say(a, '/unmute BotB', /peut de nouveau parler/);
+    await expectChat(b, /pouvez de nouveau parler/, 6000);
+    const offset = logSize();
+    await send(b, 'me revoilà');
+    await expectLog(/<BotB> me revoilà/, 6000, offset);
+  });
+  await step('/mute refusé sur un opérateur, /unmute sur un joueur non muet', async () => {
+    await say(a, '/mute BotA', /ne peut pas être rendu muet/);
+    await say(a, '/unmute BotB', /n'est pas muet/);
+  });
   await step('/uc info', () => say(a, '/uc info', /Plateforme/));
   await step('/info et raccourci /rules', async () => {
     await say(a, '/info rules', /Règles du serveur/);
