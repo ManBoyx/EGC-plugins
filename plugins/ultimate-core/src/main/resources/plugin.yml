@@ -1,0 +1,192 @@
+name: UltimateCore
+version: ${version}
+main: fr.minebed.hub.ultimate.UltimatePlugin
+api-version: '1.13'
+folia-supported: true
+authors: [ManBoyx]
+description: Socle de serveur (téléportations, kits, économie, chat, utilitaires) pour Bukkit, Spigot, Paper et Folia.
+load: POSTWORLD
+
+commands:
+  ultimatecore:
+    description: Aide, rechargement, informations, auto-test et outils console
+    usage: /<command> <help|version|reload|info|selftest|broadcast|title|actionbar|sound>
+    aliases: [uc]
+  spawn:
+    description: Se téléporter au spawn
+    usage: /<command> [joueur]
+  setspawn:
+    description: Définir le spawn ici
+    usage: /<command>
+  sethome:
+    description: Enregistrer une maison ici
+    usage: /<command> [nom]
+  home:
+    description: Aller à une maison
+    usage: /<command> [nom]
+  delhome:
+    description: Supprimer une maison
+    usage: /<command> <nom>
+  homes:
+    description: Lister vos maisons
+    usage: /<command>
+  warp:
+    description: Aller à un point de passage
+    usage: /<command> <nom> [joueur]
+  warps:
+    description: Lister les points de passage
+    usage: /<command>
+  setwarp:
+    description: Créer un point de passage ici
+    usage: /<command> <nom>
+  delwarp:
+    description: Supprimer un point de passage
+    usage: /<command> <nom>
+  tpa:
+    description: Demander à vous téléporter vers un joueur
+    usage: /<command> <joueur>
+  tpahere:
+    description: Demander à un joueur de vous rejoindre
+    usage: /<command> <joueur>
+  tpaccept:
+    description: Accepter une demande de téléportation
+    usage: /<command> [joueur]
+    aliases: [tpyes]
+  tpdeny:
+    description: Refuser une demande de téléportation
+    usage: /<command> [joueur]
+    aliases: [tpno]
+  tpcancel:
+    description: Annuler vos demandes de téléportation
+    usage: /<command>
+  back:
+    description: Retourner à la position précédente
+    usage: /<command>
+  kit:
+    description: Recevoir un kit
+    usage: /<command> [nom] [joueur]
+  kits:
+    description: Lister les kits
+    usage: /<command>
+  balance:
+    description: Voir un solde
+    usage: /<command> [joueur]
+    aliases: [bal, money]
+  pay:
+    description: Payer un joueur
+    usage: /<command> <joueur> <montant>
+  eco:
+    description: Gérer l'économie (donner, retirer, fixer, remettre à zéro)
+    usage: /<command> <give|take|set|reset> <joueur> [montant]
+  baltop:
+    description: Classement des soldes
+    usage: /<command>
+  heal:
+    description: Soigner un joueur
+    usage: /<command> [joueur]
+  feed:
+    description: Rassasier un joueur
+    usage: /<command> [joueur]
+  fly:
+    description: Activer ou couper le vol
+    usage: /<command> [joueur]
+  gamemode:
+    description: Changer de mode de jeu
+    usage: /<command> <survival|creative|adventure|spectator> [joueur]
+    aliases: [gm]
+  speed:
+    description: Changer de vitesse (1 à 10)
+    usage: /<command> <1-10> [joueur]
+  ping:
+    description: Voir son ping
+    usage: /<command> [joueur]
+  clearchat:
+    description: Vider le chat
+    usage: /<command>
+    aliases: [cc]
+  info:
+    description: Afficher une page d'information (règles, discord, vote…)
+    usage: /<command> [sujet]
+    aliases: [rules, regles, discord, vote, store, boutique, website]
+
+permissions:
+  ultimatecore.use:
+    description: Aide et version
+    default: true
+  ultimatecore.admin:
+    description: Rechargement, informations, auto-test, annonces, titres, sons
+    default: op
+  ultimatecore.spawn:
+    default: true
+  ultimatecore.spawn.others:
+    default: op
+  ultimatecore.spawn.set:
+    default: op
+  ultimatecore.homes:
+    default: true
+  ultimatecore.warp:
+    default: true
+  ultimatecore.warp.set:
+    default: op
+  ultimatecore.warp.others:
+    default: op
+  ultimatecore.warp.use.*:
+    description: Utiliser tous les points de passage (si warps.per-warp-permission est actif)
+    default: true
+  ultimatecore.tpa:
+    default: true
+  ultimatecore.back:
+    default: true
+  ultimatecore.back.death:
+    default: true
+  ultimatecore.teleport.bypass:
+    description: Téléportations sans délai ni temps de recharge
+    default: op
+  ultimatecore.kit:
+    default: true
+  ultimatecore.kit.give:
+    description: Donner un kit à un autre joueur (console comprise)
+    default: op
+  ultimatecore.kit.use.starter:
+    default: true
+  ultimatecore.balance:
+    default: true
+  ultimatecore.balance.others:
+    default: op
+  ultimatecore.pay:
+    default: true
+  ultimatecore.eco:
+    default: op
+  ultimatecore.baltop:
+    default: true
+  ultimatecore.chat.bypass:
+    description: Ignorer les filtres du chat
+    default: op
+  ultimatecore.chat.clear:
+    default: op
+  ultimatecore.heal:
+    default: op
+  ultimatecore.heal.others:
+    default: op
+  ultimatecore.feed:
+    default: op
+  ultimatecore.feed.others:
+    default: op
+  ultimatecore.fly:
+    default: op
+  ultimatecore.fly.others:
+    default: op
+  ultimatecore.gamemode:
+    default: op
+  ultimatecore.gamemode.others:
+    default: op
+  ultimatecore.speed:
+    default: op
+  ultimatecore.speed.others:
+    default: op
+  ultimatecore.ping:
+    default: true
+  ultimatecore.ping.others:
+    default: op
+  ultimatecore.info:
+    default: true

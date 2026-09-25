@@ -1,0 +1,103 @@
+# UltimateCore — configuration
+# Après une modification : /uc reload (ou redémarrez le serveur).
+# Une option absente prend sa valeur par défaut ; les messages sont dans le dossier lang/.
+
+config-version: 1
+
+# Langue des messages : fr ou en (fichiers dans lang/, que vous pouvez modifier).
+language: fr
+
+# Activez ou coupez chaque fonctionnalité. Les commandes d'un module coupé répondent « fonction désactivée ».
+modules:
+  spawn: true
+  homes: true
+  warps: true
+  tpa: true
+  back: true
+  kits: true
+  economy: true
+  chat: true
+  utility: true
+  join: true
+  announcer: false
+  info: true
+
+teleport:
+  warmup-seconds: 3            # attente avant la téléportation (0 = immédiat)
+  cancel-on-move: true         # annuler si le joueur change de bloc pendant l'attente
+  cooldown-seconds: 5          # temps de recharge entre deux téléportations
+  request-expire-seconds: 60   # durée de validité d'une demande /tpa
+  # Permission qui saute l'attente et le temps de recharge : ultimatecore.teleport.bypass
+
+spawn:
+  teleport-on-first-join: true
+  teleport-on-respawn: false
+
+homes:
+  default-limit: 3             # au-delà : permission ultimatecore.homes.limit.NOMBRE (ou .* pour illimité)
+
+warps:
+  per-warp-permission: false   # true : il faut ultimatecore.warp.use.NOM pour chaque point de passage
+
+# Kits : « /kit NOM » pour soi, « /kit NOM JOUEUR » (console comprise) pour un autre joueur.
+# Les noms de matériaux et d'enchantements des anciennes (WOOD_SWORD, DAMAGE_ALL) et des nouvelles versions
+# (WOODEN_SWORD, SHARPNESS) sont acceptés partout. Permission par défaut : ultimatecore.kit.use.NOM
+kits:
+  starter:
+    cooldown: 1d               # 30s, 10m, 2h, 1d, 1w… ; 0 = aucun
+    once: false                # true : un seul retrait par joueur
+    items:
+      - material: WOODEN_SWORD
+        amount: 1
+        name: "&aÉpée du débutant"
+        lore:
+          - "&7Un bon début."
+        enchantments:
+          SHARPNESS: 1
+      - material: BREAD
+        amount: 8
+
+economy:
+  currency: " $"               # ajouté après le montant
+  starting-balance: 100        # donné à la toute première connexion
+  min-payment: 0.01
+
+chat:
+  format:
+    enabled: false             # true : remplace le format du chat
+    text: "&7{player}&8 : &f{message}"
+  anti-spam:
+    max-messages: 4
+    seconds: 5
+  anti-repeat:
+    similarity: 0.85           # 1 = identique ; plus bas = plus sévère
+  anti-caps:
+    min-letters: 8
+    max-percent: 60
+    action: lowercase          # lowercase (corrige) ou block (refuse)
+  block-links: false
+  allowed-domains: []          # ex. ["exemple.fr"] si block-links est actif
+  forbidden-words: []          # les déguisements (c0nn4rd, c o n n a r d) sont repérés
+
+join:
+  custom-messages: true        # messages de connexion et de départ (lang/)
+  announce-first-join: true
+  welcome-title: true
+  motd:
+    - "&7Bienvenue, &f{player}&7 ! Tapez &f/info&7 pour les sujets utiles."
+
+announcer:
+  interval-seconds: 300
+  prefix: "&8[&6Info&8] &f"
+  messages:
+    - "Pensez à voter pour le serveur !"
+    - "Besoin d'aide ? Tapez /info."
+
+# Pages affichées par /info SUJET et par les raccourcis /rules, /discord, /vote, /store…
+info-topics:
+  rules:
+    - "&6Règles du serveur"
+    - "&f1. &7Respectez les autres joueurs."
+    - "&f2. &7Pas de triche ni de bug volontaire."
+  discord:
+    - "&7Notre Discord : &fhttps://exemple.invalid"
