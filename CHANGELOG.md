@@ -17,6 +17,7 @@ Premier jet d'EGC-plugins et de l'infrastructure du dépôt.
 **Ajouté après la première mise au point**
 - `/rtp` : téléport aléatoire vers un endroit sûr (chunk chargé sans bloquer quand c'est possible, contrôle du sol dans la région du lieu sur Folia).
 - `/ec` (`/enderchest`) : coffre de l'Ender, le sien ou celui d'un joueur en ligne (pas sur Folia).
+- `/vanish` (invisibilité, conservée à la reconnexion, protégée des monstres et des plaques de pression) et `/tphere`.
 - Outils de staff : `/freeze` et `/unfreeze` (avec message personnalisé, titre, rappel, persistance), `/mute` et `/unmute` (durée, motif),
   `/warn` et `/warns` (comptage, actions à seuil), `/alert` (message, titre et son), notifications au staff.
 
@@ -32,5 +33,6 @@ Premier jet d'EGC-plugins et de l'infrastructure du dépôt.
 - `/pay` et `/eco` : un « début de pseudo » unique suffisait à désigner un joueur, au risque de payer la mauvaise personne.
   Le pseudo doit maintenant être exact.
 - Paper 1.8 (ancien « PaperSpigot ») était étiqueté « Spigot ».
+- Les clés de messages `on:`/`off:` auraient été lues comme des booléens par YAML (message introuvable) : attrapé par le test de cohérence, renommées ; le piège est noté dans CONTRIBUTING.
 - `/back` ne bougeait pas sur Paper 1.16.5 : l'événement de `teleportAsync` y annonçait l'arrivée comme point de départ.
   Pour les téléportations du plugin, le service de téléportation fait foi ; l'événement ne complète que la console.

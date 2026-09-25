@@ -13,7 +13,7 @@ Seule la dernière version publiée reçoit des correctifs.
 
 - **Aucun appel réseau**, aucune télémétrie, aucun mécanisme de mise à jour automatique.
 - **Fichiers** : il lit et écrit uniquement dans son dossier (`plugins/EGC-plugins/`) : `config.yml`, `lang/*.yml` et les
-  fichiers de données (`homes.yml`, `warps.yml`, `spawn.yml`, `economy.yml`, `kit-cooldowns.yml`, `freeze.yml`, `mutes.yml`, `warns.yml`). Les écritures sont atomiques ;
+  fichiers de données (`homes.yml`, `warps.yml`, `spawn.yml`, `economy.yml`, `kit-cooldowns.yml`, `freeze.yml`, `mutes.yml`, `warns.yml`, `vanish.yml`). Les écritures sont atomiques ;
   un fichier de données illisible est mis de côté sous un autre nom, jamais écrasé en silence.
 - **Noms saisis par les joueurs** (maisons, points de passage, kits) : limités à `[A-Za-z0-9_-]{1,24}`, donc jamais utilisés
   comme chemin de fichier ni comme clé ambiguë.

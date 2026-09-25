@@ -19,17 +19,17 @@ Date : 25 septembre 2026. Matériel : machine partagée, 2 cœurs, serveurs de t
 
 | Serveur | Java | Résultat | Joueurs simulés | Durée |
 | --- | --- | --- | --- | --- |
-| paper 1.8.8 | openjdk version "1.8.0_504" | réussi | 47/47 | 103 s |
-| paper 1.12.2 | openjdk version "1.8.0_504" | réussi | 47/47 | 104 s |
-| paper 1.16.5 | openjdk version "1.8.0_504" | réussi | 47/47 | 109 s |
-| paper 1.18.2 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 47/47 | 116 s |
-| paper 1.20.4 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 47/47 | 121 s |
-| paper 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 47/47 | 123 s |
-| paper 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 47/47 | 124 s |
-| folia 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 47/47 | 136 s |
-| folia 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 47/47 | 124 s |
+| paper 1.8.8 | openjdk version "1.8.0_504" | réussi | 51/51 | 107 s |
+| paper 1.12.2 | openjdk version "1.8.0_504" | réussi | 51/51 | 106 s |
+| paper 1.16.5 | openjdk version "1.8.0_504" | réussi | 51/51 | 113 s |
+| paper 1.18.2 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 51/51 | 122 s |
+| paper 1.20.4 | openjdk version "17.0.20.1" 2026-08-18 | réussi | 51/51 | 130 s |
+| paper 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 51/51 | 138 s |
+| paper 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 51/51 | 134 s |
+| folia 1.21.11 | openjdk version "21.0.12.1" 2026-08-18 LTS | réussi | 51/51 | 141 s |
+| folia 26.1.2 | openjdk version "25.0.4.1" 2026-08-18 LTS | réussi | 51/51 | 130 s |
 
-Lecture : une ligne « réussi » veut dire que le test de fumée est passé **et** que les 47 vérifications des joueurs simulés ont réussi.
+Lecture : une ligne « réussi » veut dire que le test de fumée est passé **et** que les 51 vérifications des joueurs simulés ont réussi.
 Cette table est celle de la **dernière** matrice complète, avec le plugin complet (dont `/rtp`, `/ec` et les outils de staff).
 Deux aléas du **test** (pas du plugin) ont été corrigés en route : l'anti-spam de Minecraft qui expulsait un joueur simulé trop bavard,
 et des slimes qui tuaient les joueurs simulés sur certaines versions malgré `spawn-monsters=false` (les serveurs de test sont maintenant
@@ -45,7 +45,8 @@ Ce que couvre chaque essai :
   `/tpa` `/tpahere` `/tpaccept` `/tpdeny` `/tpcancel`, `/pay`, `/eco` depuis la console, permissions, `/heal` `/fly` `/gamemode` `/speed`
   `/ping`, spawn, `/back`, points de passage, titre et barre d'action **reçus par le joueur**, `/rtp` (distance réellement parcourue, temps de
   recharge), `/ec` (la fenêtre s'ouvre), `/freeze` (le joueur gelé **ne bouge plus**, commande bloquée, puis dégel), `/alert`, `/warn`, `/mute`
-  (chat et messages privés bloqués, puis rétablis).
+  (chat et messages privés bloqués, puis rétablis), `/tphere` (le joueur visé arrive auprès du staff), `/vanish` (l'autre joueur cesse de voir
+  le joueur invisible, puis le revoit).
 
 ## 3. Ce qui n'a pas été vérifié
 
@@ -57,6 +58,7 @@ Ce que couvre chaque essai :
 | Serveurs en mode en ligne (chat signé) | Les tests tournent en mode hors ligne. |
 | Folia avec plusieurs joueurs dans des régions différentes | Les deux joueurs simulés sont proches l'un de l'autre au départ ; les scénarios inter-régions ne sont pas provoqués. |
 | Windows, macOS | Non testés (le développement est fait sous Linux). Le code est du Java pur et n'utilise pas de chemin propre à un système. |
+| `/vanish` : staff qui voit les invisibles (`ultimatecore.vanish.see`), vanish conservé à la reconnexion, faux messages, protection contre les monstres | Non essayés en jeu (seul le cycle invisible/visible, vu par un joueur ordinaire, l'est). |
 | `/ec JOUEUR`, `freeze.quit-commands`, `warn.actions`, `/mute` d'un joueur reconnecté | Non essayés en jeu (seul `/ec` sur soi-même l'est). |
 | Sûreté des points de `/rtp` en terrain varié | Les essais se font sur monde plat : forêts, océans, grottes, villages ne sont pas éprouvés (le contrôle du sol est unitairement testé pour les noms de matériaux, pas sur un vrai relief). |
 | Charge (dizaines de joueurs) | Non testée. |
@@ -101,6 +103,7 @@ n'apparaît qu'à l'exécution**. Voici comment chacune est traitée :
 | `World.getHighestBlockYAt` : « bloc libre au-dessus » avant la 1.13, « dernier bloc plein » ensuite | `/rtp` poserait dans un bloc ou en l'air | On part d'un cran au-dessus du résultat et on descend jusqu'à un sol plein avec deux blocs libres |
 | `World.getMinHeight` absent avant la 1.16 (mondes plats à y = 4, puis à y = -60 dès la 1.18) | Plancher de recherche faux | Lecture par réflexion, sinon 0 |
 | `World.getChunkAtAsync` : Paper 1.13+ et Folia seulement | Blocage du serveur au chargement | Réflexion ; sinon chargement classique réparti sur plusieurs ticks |
+| `Player.hidePlayer(Player)` remplacée par `hidePlayer(Plugin, Player)` (1.12.2), à appeler sur chaque spectateur | `/vanish` cacherait le joueur à personne, ou planterait | `PlayerCompat` : nouvelle signature si elle existe, sinon l'ancienne ; sur Folia, dans la région de chaque spectateur |
 | `Player.openInventory` renvoie un `InventoryView` (interface en 1.21) | `IncompatibleClassChangeError` si on l'utilise | `/ec` ignore la valeur de retour |
 | Couleurs hexadécimales (1.16) | Codes affichés en clair | `ColorCodes` : couleur classique la plus proche avant la 1.16 |
 | Chat asynchrone, signé (1.19) | — | Filtre en calcul pur ; le texte publié peut différer de ce que voit un client de test (voir ROADMAP) |

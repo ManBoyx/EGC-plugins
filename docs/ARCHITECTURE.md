@@ -10,6 +10,7 @@
                        │  tpa back kits economy chat  │
                        │  utility join announcer info │
                        │  rtp enderchest freeze staff │
+                       │  vanish                      │
                        └───────┬───────────┬─────────┘
                                │           │
                     ┌──────────▼───┐  ┌────▼──────────┐
@@ -68,6 +69,7 @@ Tout est dans `plugins/EGC-plugins/` :
 | `economy.yml` | Soldes en centimes, pseudos déjà vus |
 | `kit-cooldowns.yml` | Fin de recharge par joueur et par kit |
 | `freeze.yml` | Joueurs gelés (ils le restent après une reconnexion ou un redémarrage) |
+| `vanish.yml` | Joueurs invisibles (ils le restent après une reconnexion) |
 | `mutes.yml` | Joueurs muets, fin et motif |
 | `warns.yml` | Nombre d'avertissements et dernier motif par joueur |
 

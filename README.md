@@ -25,6 +25,8 @@ qui tourne avec **un seul jar** sur Bukkit, Spigot, Paper et Folia, de la **1.8*
 | Téléport aléatoire | `/rtp [joueur]` | Endroit sûr (jamais dans l'eau, la lave, le feu ; bordure respectée), attente, temps de recharge propre |
 | Coffre de l'Ender | `/ec [joueur]` (`/enderchest`) | Celui d'un autre joueur : en ligne seulement, et **pas sur Folia** |
 | Gel | `/freeze <joueur> [message]`, `/unfreeze` | Immobilise, bloque interactions et commandes, affiche titre et message, reste gelé à la reconnexion |
+| Invisibilité | `/vanish [joueur]` (`/v`) | Invisible pour les autres (sauf staff avec `ultimatecore.vanish.see`), conservé à la reconnexion, monstres et plaques de pression ignorés |
+| Amener un joueur | `/tphere <joueur>` | Ordre du staff : sans attente ni recharge, `/back` fonctionne pour le joueur amené |
 | Sanctions du staff | `/mute`, `/unmute`, `/warn`, `/warns`, `/alert` | Muet avec durée, avertissements comptés avec actions à seuil, message à l'écran d'un joueur ou de tous |
 | Noyau | `/uc help\|version\|reload\|info\|selftest\|broadcast\|title\|actionbar\|sound` | Voir « Console et récompenses » |
 
