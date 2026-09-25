@@ -55,11 +55,6 @@ public final class ChatModule extends AbstractModule implements Listener {
         listen(this);
     }
 
-    @Override
-    public void reload() {
-        buildGuard();
-    }
-
     private void buildGuard() {
         ChatGuard.Settings s = new ChatGuard.Settings();
         s.maxMessages = Math.max(1, ctx.config().getInt("chat.anti-spam.max-messages", 4));

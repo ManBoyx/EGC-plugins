@@ -5,9 +5,12 @@ import fr.minebed.hub.common.util.Cooldowns;
 import fr.minebed.hub.compat.Teleports;
 import fr.minebed.hub.ultimate.util.Locations;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiConsumer;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -22,9 +25,19 @@ public final class TeleportService {
     private final Ctx ctx;
     private final Cooldowns cooldowns = new Cooldowns();
     private final Set<UUID> pending = Collections.newSetFromMap(new ConcurrentHashMap<UUID, Boolean>());
+    private final List<BiConsumer<Player, Location>> departureListeners = new CopyOnWriteArrayList<BiConsumer<Player, Location>>();
 
     public TeleportService(Ctx ctx) {
         this.ctx = ctx;
+    }
+
+    /**
+     * Prévenu juste avant chaque téléportation faite par ce service, avec l'endroit quitté (pour « /back »).
+     * On ne s'appuie pas sur {@code PlayerTeleportEvent} pour nos propres téléportations : Folia ne l'émet pas pour
+     * {@code teleportAsync} (constaté sur Folia 1.21.11 et 26.1.2 avec les joueurs simulés).
+     */
+    public void addDepartureListener(BiConsumer<Player, Location> listener) {
+        departureListeners.add(listener);
     }
 
     /**
@@ -90,6 +103,10 @@ public final class TeleportService {
 
     private void go(final Player player, Location target, final boolean bypass, final Msg success, final Object[] successPairs) {
         final UUID id = player.getUniqueId();
+        Location from = player.getLocation();
+        for (BiConsumer<Player, Location> listener : departureListeners) {
+            listener.accept(player, from);
+        }
         Teleports.teleport(ctx.scheduler, player, target, new java.util.function.Consumer<Boolean>() {
             @Override
             public void accept(final Boolean ok) {

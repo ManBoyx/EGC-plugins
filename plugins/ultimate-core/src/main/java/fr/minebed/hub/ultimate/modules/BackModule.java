@@ -54,9 +54,18 @@ public final class BackModule extends AbstractModule implements Listener {
                 return true;
             }
         });
+        teleports.addDepartureListener(new java.util.function.BiConsumer<Player, Location>() {
+            @Override
+            public void accept(Player player, Location from) {
+                if (from.getWorld() != null) {
+                    last.put(player.getUniqueId(), Locations.save(from));
+                }
+            }
+        });
         listen(this);
     }
 
+    /** Complète les téléportations d'autres plugins ou de la console (là où le serveur émet l'événement). */
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         String cause = event.getCause().name();

@@ -60,7 +60,7 @@ parce qu'elles n'étaient pas écrites (§2 à §6). Une règle qui n'est pas ic
 ## 5. Serveurs de test et EULA
 
 - **S1. Le test de fumée n'accepte pas l'EULA de Mojang à la place de l'utilisateur** : il faut exporter `HUB_ACCEPT_EULA=true`.
-- **S2. Les serveurs de test n'écoutent que sur `127.0.0.1`**, en mode hors ligne, 2 joueurs au plus, et sont arrêtés à la fin.
+- **S2. Les serveurs de test n'écoutent que sur `127.0.0.1`**, en mode hors ligne, 4 joueurs au plus, et sont arrêtés à la fin.
 - **S3. Les jars de serveur ne sont jamais versionnés** (`.smoke/` est ignoré) ; ils sont téléchargés avec contrôle SHA-256.
 - **S4. Le test de fumée refuse de démarrer** si la mémoire disponible est trop basse, pour ne pas gêner une machine qui héberge
   autre chose (`HUB_FORCE=1` pour passer outre).

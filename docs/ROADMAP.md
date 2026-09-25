@@ -9,6 +9,9 @@ Ce qui n'est **pas fait**, dit franchement.
 | Tests avec joueur connecté | Le test de fumée charge le plugin sur de vrais serveurs et exécute les commandes **de la console** ; il n'y a pas encore de test de bout en bout avec un joueur (téléportation, chat, kits reçus en jeu). Cette logique est couverte par des tests unitaires de sa partie pure. |
 | Titre et barre d'action des vieux serveurs (1.8 à 1.11) | Passent par des paquets internes, par réflexion : écrits d'après la structure connue de ces versions, **non vérifiés avec un joueur**. Repli automatique dans le chat si ça échoue. |
 | Folia | Le chargement, le planificateur régionalisé et l'auto-test sont vérifiés ; les scénarios de jeu (plusieurs joueurs dans des régions différentes) ne le sont pas. |
+| Sécurité de la destination | Une téléportation vers une maison, un point de passage ou `/back` ne vérifie pas que l'endroit est encore sûr (bloc posé dessus, vide, lave). |
+| Argent | Un pseudo doit être exact pour `/pay` et `/eco` (voulu : pas de « début de pseudo » pour de l'argent). Un joueur jamais vu par le plugin ne peut pas être crédité hors ligne. |
+| Chat 1.19+ | Le filtre peut modifier le message (majuscules abaissées) ; avec le chat signé des serveurs en mode en ligne, le comportement du marquage « non sécurisé » côté client n'a **pas été vérifié** (les tests tournent en mode hors ligne). |
 | Menus à inventaire | Absents : `InventoryView` est devenue une interface en 1.21 (voir `RULES.md` C3). |
 | Économie | Interne seulement ; **pas de fournisseur Vault** : les autres plugins d'économie ne la voient pas. |
 | Stockage | Fichiers YAML : adapté à un serveur moyen, pas à des dizaines de milliers de joueurs. |

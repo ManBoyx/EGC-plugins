@@ -28,12 +28,6 @@ public final class AnnouncerModule extends AbstractModule {
     }
 
     @Override
-    public void reload() {
-        stop();
-        start();
-    }
-
-    @Override
     protected void onDisable() {
         stop();
     }

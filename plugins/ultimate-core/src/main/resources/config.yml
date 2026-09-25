@@ -59,7 +59,7 @@ kits:
 
 economy:
   currency: " $"               # ajouté après le montant
-  starting-balance: 100        # donné à la toute première connexion
+  starting-balance: 100        # donné à la toute première connexion du joueur sur le serveur (pas à ceux déjà venus avant l'installation du plugin)
   min-payment: 0.01
 
 chat:

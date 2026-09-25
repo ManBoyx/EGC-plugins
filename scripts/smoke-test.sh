@@ -17,7 +17,7 @@
 # Joueurs simulés : avec HUB_BOTS=1 (Node.js 18+ et « npm install » dans scripts/bot), des clients mineflayer se connectent
 #   et essaient les commandes (maisons, kits, téléportations, économie, chat…). Ignoré si la version n'est pas gérée.
 #
-# Sécurité : le serveur n'écoute que sur 127.0.0.1, en mode hors ligne, avec 2 joueurs au plus, puis il est arrêté.
+# Sécurité : le serveur n'écoute que sur 127.0.0.1, en mode hors ligne, avec 4 joueurs au plus, puis il est arrêté.
 set -uo pipefail
 
 project="${1:?projet : paper ou folia}"
@@ -84,7 +84,7 @@ generate-structures=false
 view-distance=3
 simulation-distance=3
 spawn-protection=0
-max-players=2
+max-players=4
 allow-nether=false
 spawn-monsters=false
 spawn-animals=false

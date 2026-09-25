@@ -8,10 +8,6 @@ public interface Module {
 
     void enable();
 
-    /** Appelée à l'arrêt et avant un rechargement : sauvegarder, libérer, retirer les écouteurs. */
+    /** Appelée à l'arrêt et avant un rechargement (qui recrée les modules) : sauvegarder, libérer, retirer les écouteurs. */
     void disable();
-
-    /** Relit la configuration (par défaut : rien à faire). */
-    default void reload() {
-    }
 }

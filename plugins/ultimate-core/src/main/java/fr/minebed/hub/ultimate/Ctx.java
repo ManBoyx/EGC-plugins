@@ -38,8 +38,8 @@ public final class Ctx {
         }
     }
 
-    /** Le joueur en ligne dont le pseudo est exactement {@code name} (majuscules ignorées), sinon celui dont il est le début unique. */
-    public Player findOnline(String name) {
+    /** Le joueur en ligne dont le pseudo est exactement {@code name} (majuscules ignorées) ; pour l'argent, jamais d'approximation. */
+    public Player findOnlineExact(String name) {
         if (name == null || name.isEmpty()) {
             return null;
         }
@@ -47,12 +47,24 @@ public final class Ctx {
         if (exact != null) {
             return exact;
         }
-        Player match = null;
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.getName().equalsIgnoreCase(name)) {
                 return p;
             }
-            if (p.getName().toLowerCase(java.util.Locale.ROOT).startsWith(name.toLowerCase(java.util.Locale.ROOT))) {
+        }
+        return null;
+    }
+
+    /** Comme {@link #findOnlineExact}, mais accepte aussi le début d'un pseudo s'il n'y a qu'un joueur qui y correspond (commandes de confort). */
+    public Player findOnline(String name) {
+        Player exact = findOnlineExact(name);
+        if (exact != null || name == null || name.isEmpty()) {
+            return exact;
+        }
+        String lower = name.toLowerCase(java.util.Locale.ROOT);
+        Player match = null;
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.getName().toLowerCase(java.util.Locale.ROOT).startsWith(lower)) {
                 if (match != null) {
                     return null; // ambigu
                 }

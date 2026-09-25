@@ -136,11 +136,6 @@ public final class KitsModule extends AbstractModule {
         cooldowns.flush();
     }
 
-    @Override
-    public void reload() {
-        loadKits();
-    }
-
     /** Lit la section {@code kits} ; un objet invalide est signalé et ignoré, jamais fatal. */
     private void loadKits() {
         kits.clear();

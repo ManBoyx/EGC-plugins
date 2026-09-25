@@ -254,9 +254,12 @@ public final class EconomyModule extends AbstractModule implements Listener {
         store.set("balances." + account, cents == 0 ? null : cents);
     }
 
-    /** Compte d'un joueur en ligne, sinon d'un joueur déjà vu (pseudo enregistré) ; jamais de requête réseau vers Mojang. */
+    /**
+     * Compte d'un joueur en ligne, sinon d'un joueur déjà vu (pseudo enregistré) ; jamais de requête réseau vers Mojang.
+     * Le pseudo doit être exact : pour de l'argent, pas de « début de pseudo » qui pourrait viser la mauvaise personne.
+     */
     private UUID resolve(String name) {
-        Player online = ctx.findOnline(name);
+        Player online = ctx.findOnlineExact(name);
         if (online != null) {
             return online.getUniqueId();
         }

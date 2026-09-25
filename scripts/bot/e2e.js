@@ -40,7 +40,11 @@ function connect(name) {
       return reject(e);
     }
     bot.chatLog = [];
+    bot.titles = [];
+    bot.actionBars = [];
     bot.on('messagestr', (text) => bot.chatLog.push(text));
+    bot.on('title', (text, type) => bot.titles.push({ type, text: String(text) }));
+    bot.on('actionBar', (msg) => bot.actionBars.push(String(msg)));
     const timer = setTimeout(() => reject(new Error('connexion trop longue : ' + name)), 60000);
     bot.once('spawn', () => {
       clearTimeout(timer);
@@ -220,6 +224,21 @@ async function main() {
     await waitFor(() => b.inventory.items().some((i) => /sword/.test(i.name)), 8000, 'épée reçue par BotB');
   });
   await step('/tpa refusé : joueur inconnu', () => say(a, '/tpa Fantome', /Joueur introuvable/));
+  await step('/tpdeny : la demande est refusée', async () => {
+    await say(a, '/tpa BotB', /Demande envoyée/);
+    await expectChat(b, /demande à se téléporter vers vous/, 6000);
+    await say(b, '/tpdeny', /refusée/);
+    await expectChat(a, /refusé votre demande/, 6000);
+  });
+  await step('/tpcancel : annule ses demandes', async () => {
+    await say(a, '/tpa BotB', /Demande envoyée/);
+    await say(a, '/tpcancel', /1 demande\(s\) annulée/);
+    await say(b, '/tpaccept', /Aucune demande en attente/);
+  });
+  await step('/kits et /baltop', async () => {
+    await say(a, '/kits', /starter/);
+    await say(a, '/baltop', /Les plus riches/);
+  });
   await step('commande réservée refusée à un joueur', () => say(a, '/heal', /pas la permission/));
 
   consoleCommand('op BotA');
@@ -248,11 +267,36 @@ async function main() {
     await say(a, '/back', /Retour à votre position précédente/);
     await waitFor(() => a.entity.position.x > spawnX + 30, 8000, 'retourné à l\'endroit quitté');
   });
-  await step('titre et barre d\'action reçus sans erreur', async () => {
+  await step('titre et sous-titre reçus par le joueur', async () => {
     consoleCommand('uc title BotA Bonjour|Sous-titre');
-    consoleCommand('uc actionbar BotA Test');
-    await sleep(1500);
-    // Sur les versions où le client ne remonte pas les titres, c'est le journal du serveur qui prouve l'absence d'erreur.
+    await waitFor(() => a.titles.some((t) => /Bonjour/.test(t.text)) && a.titles.some((t) => /Sous-titre/.test(t.text)), 8000, 'titre et sous-titre (reçu : ' + JSON.stringify(a.titles) + ')');
+  });
+  await step('barre d\'action reçue par le joueur', async () => {
+    consoleCommand('uc actionbar BotA MessageBarre');
+    await waitFor(() => a.actionBars.some((m) => /MessageBarre/.test(m)), 8000, 'barre d\'action (reçu : ' + JSON.stringify(a.actionBars) + ')');
+  });
+  await step('points de passage : création, liste, téléportation, suppression', async () => {
+    await say(a, '/setwarp arene', /Point de passage arene créé/);
+    await say(a, '/warps', /arene/);
+    const here = a.entity.position.x;
+    moveBy(a, 'BotA', 60, 0);
+    await waitFor(() => a.entity.position.x > here + 50, 10000, 'déplacé');
+    await say(a, '/warp arene', /Téléporté vers arene/);
+    await waitFor(() => a.entity.position.x < here + 10, 8000, 'arrivé au point de passage');
+    await say(a, '/warp nexistepas', /introuvable/);
+    await say(a, '/delwarp arene', /supprimé/);
+    await say(a, '/warp arene', /introuvable/);
+  });
+  await step('/tpahere : le destinataire rejoint le demandeur', async () => {
+    moveBy(b, 'BotB', 40, 40);
+    await waitFor(() => !near(b.entity.position, a.entity.position, 10), 10000, 'BotB éloigné de BotA');
+    await sleep(800);
+    await say(a, '/tpahere BotB', /Demande envoyée/);
+    await expectChat(b, /vous demande de vous téléporter à sa position/, 6000);
+    const since = b.chatLog.length;
+    b.chat('/tpaccept');
+    await expectChat(b, /Téléportation dans 3 secondes/, 6000, since);
+    await waitFor(() => near(b.entity.position, a.entity.position, 4), 12000, 'BotB arrivé près de BotA');
   });
   await step('/uc info', () => say(a, '/uc info', /Plateforme/));
   await step('/info et raccourci /rules', async () => {
