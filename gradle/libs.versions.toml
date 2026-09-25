@@ -1,0 +1,9 @@
+[versions]
+# On compile contre la plus ancienne API prise en charge (1.8.8) : tout ce qui est plus récent passe par
+# une couche de compatibilité (réflexion), ce qui garantit qu'aucun appel trop récent n'entre par mégarde.
+spigot = "1.8.8-R0.1-SNAPSHOT"
+vault = "1.7"
+
+[libraries]
+spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
+vault-api = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
