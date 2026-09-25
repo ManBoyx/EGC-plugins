@@ -2,7 +2,7 @@
 
 ## 0.1.0 — première version
 
-Premier jet d'UltimateCore et de l'infrastructure du dépôt.
+Premier jet d'EGC-plugins et de l'infrastructure du dépôt.
 
 **Plugin**
 - Modules : spawn, maisons, points de passage, demandes de téléportation, retour, kits, économie interne, chat

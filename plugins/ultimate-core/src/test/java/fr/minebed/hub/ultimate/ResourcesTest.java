@@ -82,7 +82,7 @@ class ResourcesTest {
     void pluginYmlDeclaresFoliaSupportAndAllCommandsHaveUsage() throws Exception {
         YamlConfiguration plugin = load("plugin.yml");
         assertTrue(plugin.getBoolean("folia-supported"), "folia-supported doit être vrai");
-        assertEquals("UltimateCore", plugin.getString("name"));
+        assertEquals("EGC-plugins", plugin.getString("name"));
         assertEquals("fr.minebed.hub.ultimate.UltimatePlugin", plugin.getString("main"));
         for (String name : plugin.getConfigurationSection("commands").getKeys(false)) {
             assertNotNull(plugin.getString("commands." + name + ".usage"), "usage manquant : " + name);

@@ -1,7 +1,7 @@
-# Récompenses Azuriom avec UltimateCore
+# Récompenses Azuriom avec EGC-plugins
 
 Azuriom (plugin **Vote**, boutique) exécute des **commandes console** sur le serveur de jeu, via AzLink. `{player}` est remplacé
-par le pseudo du joueur. Toutes les commandes d'UltimateCore acceptent la console.
+par le pseudo du joueur. Toutes les commandes d'EGC-plugins acceptent la console.
 
 ## Récompense de vote
 

@@ -1,6 +1,6 @@
 # Messages en français. Codes de couleur : &a, &l… et &#rrggbb (couleurs hexadécimales, à partir de la 1.16).
 # Jetons {comme_ceci} remplacés par le plugin. Gardez les guillemets. Un texte vide désactive le message.
-prefix: "&8[&bUltimate&8] &7"
+prefix: "&8[&bEGC&8] &7"
 general:
   no-permission: "&cVous n'avez pas la permission de faire cela."
   player-only: "&cCette commande doit être lancée par un joueur."

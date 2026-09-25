@@ -15,7 +15,7 @@ if [ -s "$jar" ]; then
   exit 0
 fi
 
-ua="minecraft-plugins-hub-smoke/0.1"
+ua="EGC-plugins-smoke/0.1"
 info="$(curl -fsSL -A "$ua" "https://fill.papermc.io/v3/projects/$project/versions/$version/builds/latest")"
 read -r url sha < <(printf '%s' "$info" | python3 -c '
 import json, sys

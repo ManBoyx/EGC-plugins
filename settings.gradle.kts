@@ -22,7 +22,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "minecraft-plugins-hub"
+rootProject.name = "EGC-plugins"
 
 include(":libs:common")
 include(":libs:compat")

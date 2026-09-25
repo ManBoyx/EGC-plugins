@@ -15,7 +15,7 @@ Ce dépôt est prêt à être publié, mais **rien n'a été publié** : il est 
 ## Créer le dépôt GitHub
 
 ```bash
-gh repo create minecraft-plugins-hub --private --source . --remote origin   # privé d'abord
+gh repo create EGC-plugins --private --source . --remote origin   # privé d'abord
 git push -u origin main
 ```
 
@@ -26,8 +26,8 @@ l'EULA de Mojang** (https://aka.ms/MinecraftEULA).
 ## Produire une version
 
 ```bash
-./gradlew clean build dist        # build/dist/ultimate-core-<version>.jar + SHA256SUMS
-git tag -a v0.1.0 -m "UltimateCore 0.1.0"
+./gradlew clean build dist        # build/dist/EGC-plugins-<version>.jar + SHA256SUMS
+git tag -a v0.1.0 -m "EGC-plugins 0.1.0"
 ```
 
 Joignez le jar **et** `SHA256SUMS` à la publication (release GitHub). La version vient de `gradle.properties` (`hub.version`).

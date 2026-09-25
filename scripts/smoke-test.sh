@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Test de fumée : démarre un vrai serveur Paper ou Folia, y charge UltimateCore, lance « /uc selftest », recharge,
+# Test de fumée : démarre un vrai serveur Paper ou Folia, y charge EGC-plugins, lance « /uc selftest », recharge,
 # relance l'auto-test, exécute des commandes console et cherche toute erreur du plugin dans le journal.
 #
 # Usage : scripts/smoke-test.sh <paper|folia> <version> [port]
@@ -58,12 +58,12 @@ echo "== $project $version avec $("$java_bin" -version 2>&1 | head -1)"
 
 # --- Fichiers
 "$root/scripts/fetch-server.sh" "$project" "$version" || exit 2
-plugin_jar="$(ls "$root"/plugins/ultimate-core/build/libs/ultimate-core-*.jar 2>/dev/null | grep -v -- '-thin' | head -1)"
+plugin_jar="$(ls "$root"/plugins/ultimate-core/build/libs/EGC-plugins-*.jar 2>/dev/null | grep -v -- '-thin' | head -1)"
 if [ -z "$plugin_jar" ]; then echo "Jar du plugin introuvable : lancez ./gradlew :plugins:ultimate-core:shadowJar" >&2; exit 2; fi
 
 mkdir -p "$dir/plugins"
-rm -f -- "$dir"/plugins/ultimate-core*.jar "$dir"/plugins/UltimateCore.jar
-rm -rf -- "$dir/plugins/UltimateCore"
+rm -f -- "$dir"/plugins/ultimate-core*.jar "$dir"/plugins/EGC-plugins*.jar
+rm -rf -- "$dir/plugins/EGC-plugins" "$dir/plugins/UltimateCore"
 cp "$plugin_jar" "$dir/plugins/"
 if [ "${HUB_BOTS:-}" = "1" ]; then
   # Les joueurs simulés doivent partir d'un état propre (nouveaux joueurs, personne opérateur).
@@ -89,7 +89,7 @@ allow-nether=false
 spawn-monsters=false
 spawn-animals=false
 spawn-npcs=false
-motd=UltimateCore smoke test
+motd=EGC-plugins smoke test
 PROPS
 
 # --- Lancement (l'entrée du serveur est un tube nommé, pour lui envoyer des commandes)
@@ -116,9 +116,9 @@ send() { echo "$1" >&3; }
 fail() { echo "ÉCHEC : $1"; echo "--- fin du journal ($log) :"; tail -40 "$log"; exit 1; }
 
 wait_for 'Done \([0-9.,]+s\)!' 420 || fail "le serveur n'a pas fini de démarrer"
-grep -qE "Error occurred while enabling|Could not load '.*ultimate|Disabling UltimateCore" "$log" && fail "le plugin n'a pas pu se charger"
-grep -q "UltimateCore .* activé sur" "$log" || fail "message d'activation du plugin absent"
-echo "-- démarrage : $(grep -m1 'UltimateCore .* activé sur' "$log" | sed 's/^.*\] //')"
+grep -qE "Error occurred while enabling|Could not load '.*EGC|Disabling EGC-plugins" "$log" && fail "le plugin n'a pas pu se charger"
+grep -q "EGC-plugins .* activé sur" "$log" || fail "message d'activation du plugin absent"
+echo "-- démarrage : $(grep -m1 'EGC-plugins .* activé sur' "$log" | sed 's/^.*\] //')"
 
 run_selftest() {
   local before
@@ -167,6 +167,5 @@ if grep -nE "at fr\.minebed\.hub|Erreur dans la commande|Erreur à l'arrêt|n'a 
   echo "ÉCHEC : erreurs du plugin dans le journal :"; head -30 /tmp/hub-smoke-errors.$$; rm -f /tmp/hub-smoke-errors.$$; exit 1
 fi
 rm -f /tmp/hub-smoke-errors.$$
-if ! grep -q 'UltimateCore' "$log" || ! grep -qE "Disabling UltimateCore|Unloading|Disabling plugins" "$log"; then :; fi
-echo "-- avertissements du plugin :"; grep -E "\[UltimateCore\].*(WARN|WARNING)|WARN.*UltimateCore" "$log" | sed 's/^/   /' | head -10 || true
+echo "-- avertissements du plugin :"; grep -E "\[EGC-plugins\].*(WARN|WARNING)|WARN.*EGC-plugins" "$log" | sed 's/^/   /' | head -10 || true
 echo "RÉSULTAT : $project $version : PASS"

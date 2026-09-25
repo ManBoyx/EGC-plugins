@@ -6,7 +6,7 @@ qui est ce qui coûte le plus cher à réparer.
 ## Mise en route
 
 ```bash
-git clone <ce dépôt> && cd minecraft-plugins-hub
+git clone <ce dépôt> && cd EGC-plugins
 ./gradlew build                 # JDK 17+ ; le résultat reste du Java 8
 ```
 

@@ -49,7 +49,7 @@ final class CoreModule extends AbstractModule {
                         help(sender);
                         return true;
                     case "version":
-                        sender.sendMessage(ctx.messages.raw(Msg.PREFIX) + "UltimateCore " + plugin.getDescription().getVersion() + " (" + ctx.platform + ")");
+                        sender.sendMessage(ctx.messages.raw(Msg.PREFIX) + "EGC-plugins " + plugin.getDescription().getVersion() + " (" + ctx.platform + ")");
                         return true;
                     case "reload":
                         plugin.reloadAll();

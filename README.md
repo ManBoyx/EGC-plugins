@@ -1,12 +1,12 @@
-# Minecraft Plugins Hub
+# EGC plugins
 
-Dépôt de plugins Minecraft, avec **UltimateCore** : un socle de serveur (téléportations, kits, économie, chat, utilitaires)
+Dépôt de plugins Minecraft, avec le plugin **EGC-plugins** : un socle de serveur (téléportations, kits, économie, chat, utilitaires)
 qui tourne avec **un seul jar** sur Bukkit, Spigot, Paper et Folia, de la **1.8** à la dernière version.
 
 > État : version 0.1.0, première publication. Ce qui est vérifié, et ce qui ne l'est pas, est écrit noir sur blanc dans
 > [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md). Les limites connues sont dans [docs/ROADMAP.md](docs/ROADMAP.md).
 
-## Ce que fait UltimateCore
+## Ce que fait EGC-plugins
 
 | Module | Commandes | Notes |
 | --- | --- | --- |
@@ -29,9 +29,9 @@ Chaque module se coupe dans `config.yml`. Messages en **français** et **anglais
 
 ## Installer
 
-1. Récupérez `ultimate-core-<version>.jar` (voir « Compiler »).
+1. Récupérez `EGC-plugins-<version>.jar` (voir « Compiler »).
 2. Déposez-le dans le dossier `plugins/` du serveur, redémarrez.
-3. Modifiez `plugins/UltimateCore/config.yml`, puis `/uc reload`.
+3. Modifiez `plugins/EGC-plugins/config.yml`, puis `/uc reload`.
 4. Vérifiez : `/uc selftest` (console) doit finir par `SELFTEST RESULT: PASS`.
 
 Java : celui qu'exige votre version du jeu (8 jusqu'à la 1.16, 17 pour la 1.18 à 1.20.4, 21 ensuite, 25 pour la numérotation 26.x).

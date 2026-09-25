@@ -1,5 +1,5 @@
 'use strict';
-// Test de bout en bout d'UltimateCore avec de vrais joueurs (simulés par mineflayer) sur un serveur de test local.
+// Test de bout en bout d'EGC-plugins avec de vrais joueurs (simulés par mineflayer) sur un serveur de test local.
 // Lancé par scripts/smoke-test.sh quand HUB_BOTS=1 ; se lance aussi seul :
 //   node scripts/bot/e2e.js --port 25599 --version 1.20.4 --console .smoke/run/paper-1.20.4/console.in
 //

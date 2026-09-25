@@ -12,7 +12,7 @@ Seule la dernière version publiée reçoit des correctifs.
 ## Ce que fait le plugin
 
 - **Aucun appel réseau**, aucune télémétrie, aucun mécanisme de mise à jour automatique.
-- **Fichiers** : il lit et écrit uniquement dans son dossier (`plugins/UltimateCore/`) : `config.yml`, `lang/*.yml` et les
+- **Fichiers** : il lit et écrit uniquement dans son dossier (`plugins/EGC-plugins/`) : `config.yml`, `lang/*.yml` et les
   fichiers de données (`homes.yml`, `warps.yml`, `spawn.yml`, `economy.yml`, `kit-cooldowns.yml`). Les écritures sont atomiques ;
   un fichier de données illisible est mis de côté sous un autre nom, jamais écrasé en silence.
 - **Noms saisis par les joueurs** (maisons, points de passage, kits) : limités à `[A-Za-z0-9_-]{1,24}`, donc jamais utilisés

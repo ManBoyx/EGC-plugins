@@ -23,7 +23,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * UltimateCore : un seul jar pour Bukkit, Spigot, Paper et Folia, de la 1.8 à aujourd'hui.
+ * EGC-plugins : un seul jar pour Bukkit, Spigot, Paper et Folia, de la 1.8 à aujourd'hui.
  * Chaque fonctionnalité est un module que l'on coupe dans la configuration ; une erreur dans un module n'empêche pas les autres.
  */
 public final class UltimatePlugin extends JavaPlugin {
@@ -58,7 +58,7 @@ public final class UltimatePlugin extends JavaPlugin {
         core.enable();
         checkConfigVersion();
         enableModules();
-        getLogger().info("UltimateCore " + getDescription().getVersion() + " activé sur " + platform + " (Java " + System.getProperty("java.version")
+        getLogger().info("EGC-plugins " + getDescription().getVersion() + " activé sur " + platform + " (Java " + System.getProperty("java.version")
             + "). Modules : " + (active.isEmpty() ? "aucun" : String.join(", ", activeModuleIds())));
     }
 

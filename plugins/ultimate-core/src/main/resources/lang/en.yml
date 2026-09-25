@@ -1,6 +1,6 @@
 # English messages. Color codes: &a, &l… and &#rrggbb (hex colors, from 1.16).
 # {tokens} are replaced by the plugin. Keep the quotes. An empty text disables the message.
-prefix: "&8[&bUltimate&8] &7"
+prefix: "&8[&bEGC&8] &7"
 general:
   no-permission: "&cYou don't have permission to do that."
   player-only: "&cThis command must be run by a player."

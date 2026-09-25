@@ -56,7 +56,7 @@ Sur Bukkit, Spigot et Paper, `runOnPlayer` exécute tout de suite (on est déjà
 
 ## Données
 
-Tout est dans `plugins/UltimateCore/` :
+Tout est dans `plugins/EGC-plugins/` :
 
 | Fichier | Contenu |
 | --- | --- |
