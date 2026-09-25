@@ -14,6 +14,9 @@
 # Java : Java 8 jusqu'à la 1.16, 17 pour 1.17 à 1.20.4, 21 pour 1.20.5 à 1.21.x, 25 pour la numérotation 26.x.
 #   Indiquez l'exécutable avec JAVA8, JAVA17, JAVA21 ou JAVA25 ; à défaut, « java » du PATH est utilisé.
 #
+# Joueurs simulés : avec HUB_BOTS=1 (Node.js 18+ et « npm install » dans scripts/bot), des clients mineflayer se connectent
+#   et essaient les commandes (maisons, kits, téléportations, économie, chat…). Ignoré si la version n'est pas gérée.
+#
 # Sécurité : le serveur n'écoute que sur 127.0.0.1, en mode hors ligne, avec 2 joueurs au plus, puis il est arrêté.
 set -uo pipefail
 
@@ -62,6 +65,11 @@ mkdir -p "$dir/plugins"
 rm -f -- "$dir"/plugins/ultimate-core*.jar "$dir"/plugins/UltimateCore.jar
 rm -rf -- "$dir/plugins/UltimateCore"
 cp "$plugin_jar" "$dir/plugins/"
+if [ "${HUB_BOTS:-}" = "1" ]; then
+  # Les joueurs simulés doivent partir d'un état propre (nouveaux joueurs, personne opérateur).
+  rm -rf -- "$dir/world" "$dir/world_nether" "$dir/world_the_end"
+  rm -f -- "$dir/ops.json" "$dir/usercache.json"
+fi
 echo "eula=true" > "$dir/eula.txt"
 
 level_type="flat"
@@ -126,6 +134,19 @@ echo "-- auto-test 1 : PASS"
 send "uc reload"; wait_for 'rechargés' 30 || fail "rechargement sans réponse"
 run_selftest || { grep -E 'selftest' "$log" | tail -25; fail "auto-test en échec après rechargement"; }
 echo "-- auto-test 2 (après uc reload) : PASS"
+
+# Joueurs simulés (optionnel) : HUB_BOTS=1 ; demande Node.js 18+ et « npm install » dans scripts/bot.
+if [ "${HUB_BOTS:-}" = "1" ]; then
+  if ! command -v node >/dev/null 2>&1; then
+    echo "-- joueurs simulés : ignorés (Node.js introuvable)"
+  else
+    echo "-- joueurs simulés :"
+    node "$root/scripts/bot/e2e.js" --port "$port" --version "$version" --console "$fifo" --log "$log" 2>&1 | sed 's/^/   /'
+    bots_code="${PIPESTATUS[0]}"
+    if [ "$bots_code" -eq 3 ]; then echo "-- joueurs simulés : version non gérée, ignorés"
+    elif [ "$bots_code" -ne 0 ]; then fail "des joueurs simulés ont échoué"; fi
+  fi
+fi
 
 # Commandes utilisables depuis la console : aucune ne doit lever d'erreur.
 for c in "uc help" "uc info" "uc version" "uc broadcast Bonjour à tous" "uc title * Test|Sous-titre" "uc actionbar * Test" "uc sound * LEVEL_UP" \

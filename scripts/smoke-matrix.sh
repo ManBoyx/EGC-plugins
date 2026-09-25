@@ -11,8 +11,8 @@ fi
 out="$root/.smoke/results.md"
 mkdir -p "$root/.smoke"
 {
-  echo "| Serveur | Java | Résultat | Durée |"
-  echo "| --- | --- | --- | --- |"
+  echo "| Serveur | Java | Résultat | Joueurs simulés | Durée |"
+  echo "| --- | --- | --- | --- | --- |"
 } > "$out"
 status=0
 for t in "${targets[@]}"; do
@@ -24,7 +24,11 @@ for t in "${targets[@]}"; do
   elapsed=$(( $(date +%s) - start ))
   java="$(sed -n 's/^== .* avec //p' "$log" | head -1)"
   if [ "$code" -eq 0 ]; then res="réussi"; else res="**ÉCHEC**"; status=1; fi
-  echo "| $project $version | ${java:-?} | $res | ${elapsed} s |" >> "$out"
+  bots="$(sed -n 's/.*JOUEURS SIMULÉS : \(.*\) réussis.*/\1/p' "$log" | head -1)"
+  if [ -z "$bots" ]; then
+    if grep -q "version non gérée" "$log"; then bots="version non gérée"; else bots="non lancés"; fi
+  fi
+  echo "| $project $version | ${java:-?} | $res | $bots | ${elapsed} s |" >> "$out"
   echo "$project $version : $res (${elapsed} s)"
 done
 echo; cat "$out"
