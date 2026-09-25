@@ -43,8 +43,10 @@ function connect(name) {
     bot.titles = [];
     bot.actionBars = [];
     bot.on('messagestr', (text) => bot.chatLog.push(text));
-    bot.on('title', (text, type) => bot.titles.push({ type, text: String(text) }));
-    bot.on('actionBar', (msg) => bot.actionBars.push(String(msg)));
+    // Selon la version, le texte arrive en chaîne ou en objet (composant) : on le met à plat pour chercher dedans.
+    const flat = (t) => (typeof t === 'string' ? t : JSON.stringify(t));
+    bot.on('title', (text, type) => bot.titles.push({ type, text: flat(text) }));
+    bot.on('actionBar', (msg) => bot.actionBars.push(flat(msg)));
     const timer = setTimeout(() => reject(new Error('connexion trop longue : ' + name)), 60000);
     bot.once('spawn', () => {
       clearTimeout(timer);
@@ -265,7 +267,7 @@ async function main() {
   await step('opérateur : /back après /spawn', async () => {
     const spawnX = a.entity.position.x;
     await say(a, '/back', /Retour à votre position précédente/);
-    await waitFor(() => a.entity.position.x > spawnX + 30, 8000, 'retourné à l\'endroit quitté');
+    await waitFor(() => a.entity.position.x > spawnX + 30, 8000, `retourné à l'endroit quitté (x avant ${spawnX}, x après ${a.entity.position.x})`);
   });
   await step('titre et sous-titre reçus par le joueur', async () => {
     consoleCommand('uc title BotA Bonjour|Sous-titre');

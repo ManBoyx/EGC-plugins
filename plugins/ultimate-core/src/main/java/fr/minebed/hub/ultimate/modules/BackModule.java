@@ -65,13 +65,18 @@ public final class BackModule extends AbstractModule implements Listener {
         listen(this);
     }
 
-    /** Complète les téléportations d'autres plugins ou de la console (là où le serveur émet l'événement). */
+    /**
+     * Complète les téléportations faites hors de ce plugin (commande « /tp » de la console ou d'un opérateur). Les nôtres
+     * (cause « PLUGIN ») sont déjà enregistrées par le service de téléportation : sur Paper 1.16.5 l'événement de
+     * {@code teleportAsync} annonçait l'endroit d'arrivée comme départ et écrasait le bon point (constaté avec les joueurs simulés).
+     */
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         String cause = event.getCause().name();
-        // Seules les téléportations « voulues » comptent : pas les perles d'Ender, portails, fruits de Chorus…
-        if ((cause.equals("COMMAND") || cause.equals("PLUGIN") || cause.equals("UNKNOWN")) && event.getFrom().getWorld() != null) {
-            last.put(event.getPlayer().getUniqueId(), Locations.save(event.getFrom()));
+        Location from = event.getFrom();
+        Location to = event.getTo();
+        if ((cause.equals("COMMAND") || cause.equals("UNKNOWN")) && from.getWorld() != null && (to == null || !Locations.sameBlock(from, to))) {
+            last.put(event.getPlayer().getUniqueId(), Locations.save(from));
         }
     }
 
