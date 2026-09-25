@@ -87,6 +87,7 @@ spawn-protection=0
 max-players=4
 allow-nether=false
 spawn-monsters=false
+difficulty=0
 spawn-animals=false
 spawn-npcs=false
 motd=EGC-plugins smoke test
@@ -134,6 +135,8 @@ echo "-- auto-test 1 : PASS"
 send "uc reload"; wait_for 'rechargés' 30 || fail "rechargement sans réponse"
 run_selftest || { grep -E 'selftest' "$log" | tail -25; fail "auto-test en échec après rechargement"; }
 echo "-- auto-test 2 (après uc reload) : PASS"
+
+send "difficulty peaceful"   # aucun monstre : sur certaines versions des slimes tuaient les joueurs simulés malgré spawn-monsters=false
 
 # Joueurs simulés (optionnel) : HUB_BOTS=1 ; demande Node.js 18+ et « npm install » dans scripts/bot.
 if [ "${HUB_BOTS:-}" = "1" ]; then

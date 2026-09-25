@@ -321,10 +321,24 @@ async function main() {
   await step('/rtp : envoi loin puis temps de recharge', async () => {
     await sleep(6000); // fin du temps de recharge de téléportation de BotB
     const before = b.entity.position.clone();
-    const since = b.chatLog.length;
-    await send(b, '/rtp');
-    await expectChat(b, /Recherche d'un endroit sûr/, 8000, since);
-    await expectChat(b, /Téléporté en X/, 40000, since);
+    // Si la recharge de téléportation (5 s) n'est pas finie, le plugin le dit : on patiente et on réessaie.
+    for (let essai = 0; ; essai++) {
+      const since = b.chatLog.length;
+      await send(b, '/rtp');
+      await expectChat(b, /Recherche d'un endroit sûr/, 8000, since);
+      const deadline = Date.now() + 40000;
+      let attente = false;
+      while (Date.now() < deadline) {
+        const log = b.chatLog.slice(since);
+        if (log.some((l) => /Téléporté en X/.test(l))) break;
+        if (log.some((l) => /Patientez encore/.test(l))) { attente = true; break; }
+        await sleep(200);
+      }
+      if (!attente) break;
+      if (essai >= 2) throw new Error('recharge de téléportation toujours active après 3 essais');
+      await sleep(6000);
+    }
+    await expectChat(b, /Téléporté en X/, 40000, 0);
     await waitFor(() => Math.hypot(b.entity.position.x - before.x, b.entity.position.z - before.z) > 150, 20000, 'BotB loin de son point de départ');
     await say(b, '/rtp', /Prochain téléport aléatoire/);
   });
