@@ -84,7 +84,7 @@ build-logic/             conventions de compilation partagées (Java 8, Shadow, 
 docs/                    audit, architecture, compatibilité, dépendances, feuille de route
 scripts/                 téléchargement de serveurs, tests de fumée, contrôle de secrets
 examples/                configurations d'exemple
-.github/workflows/       intégration continue
+.github/workflows/       intégration continue (branche `ci` tant que le jeton GitHub n'a pas le droit `workflow`)
 ```
 
 Voir [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) pour le détail.

@@ -54,8 +54,7 @@ Ce sont des extensions **du site**, pas du jeu : ni Bukkit, ni Forge, ni Fabric 
   Conséquence directe pour la conception : **toute commande d'un plugin maison doit pouvoir s'exécuter depuis la console**, avec
   un pseudo passé en argument, sans exception quand le joueur est absent.
 - **Sanctions** [vérifié côté site] : le plugin `libertybans` d'Azuriom lit les données de LibertyBans ; la page de bannissement
-  attend donc que **LibertyBans** soit installé côté jeu **[à vérifier]** (voir mémoire du projet : étapes en base de données
-  restant à faire par l'administrateur).
+  attend donc que **LibertyBans** soit installé côté jeu **[à vérifier]** (des étapes en base de données restent à faire par l'administrateur).
 - **Boutique** : Tebex livre ses achats par un plugin Tebex côté jeu **[à vérifier]**.
 
 ### 2.3 Plugins Minecraft attendus côté jeu [à vérifier]
