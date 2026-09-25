@@ -21,6 +21,10 @@ modules:
   join: true
   announcer: false
   info: true
+  rtp: true
+  enderchest: true
+  freeze: true
+  staff: true
 
 teleport:
   warmup-seconds: 3            # attente avant la téléportation (0 = immédiat)
@@ -101,3 +105,31 @@ info-topics:
     - "&f2. &7Pas de triche ni de bug volontaire."
   discord:
     - "&7Notre Discord : &fhttps://exemple.invalid"
+
+# Téléport aléatoire : /rtp (soi-même) ou /rtp JOUEUR (permission ultimatecore.rtp.others, console comprise).
+rtp:
+  min-radius: 200              # distance minimale au centre
+  max-radius: 3000             # distance maximale (la bordure du monde est respectée)
+  center: spawn                # spawn (point d'apparition du monde) ou zero (0, 0)
+  worlds: []                   # mondes permis ; vide = le monde du joueur s'il est « normal », sinon le premier monde normal
+  cooldown-seconds: 300        # temps de recharge propre à /rtp (permission ultimatecore.rtp.bypass pour l'ignorer)
+  attempts: 12                 # endroits essayés avant d'abandonner
+
+# Gel d'un joueur par le staff : /freeze JOUEUR [message], /unfreeze JOUEUR.
+freeze:
+  remind-seconds: 5            # rappel dans la barre d'action du joueur gelé
+  protect: true                # le joueur gelé ne subit aucun dégât
+  block-commands: true         # commandes bloquées pendant le gel…
+  allowed-commands: []         # …sauf celles-ci, ex. ["msg", "r"]
+  quit-commands: []            # commandes de la console s'il se déconnecte gelé ; ex. ["ban {player} 30d Déconnexion pendant un contrôle"]
+
+# Muet : commandes privées bloquées pendant un /mute (le chat public l'est toujours).
+mute:
+  blocked-commands: [msg, tell, w, whisper, r, reply, me, t, m]
+
+# Avertissements : actions de la console à un certain nombre d'avertissements, ex.
+#   actions:
+#     3: ["mute {player} 1h Trop d'avertissements"]
+#     5: ["kick {player} Trop d'avertissements"]
+warn:
+  actions: {}

@@ -71,7 +71,7 @@ class ResourcesTest {
     @Test
     void everyModuleHasAToggleInTheConfig() throws Exception {
         YamlConfiguration config = load("config.yml");
-        List<String> ids = Arrays.asList("spawn", "homes", "warps", "tpa", "back", "kits", "economy", "chat", "utility", "join", "announcer", "info");
+        List<String> ids = Arrays.asList("spawn", "homes", "warps", "tpa", "back", "kits", "economy", "chat", "utility", "join", "announcer", "info", "rtp", "enderchest", "freeze", "staff");
         for (String id : ids) {
             assertTrue(config.isBoolean("modules." + id), "modules." + id + " manquant");
         }

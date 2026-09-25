@@ -108,6 +108,34 @@ commands:
     description: Afficher une page d'information (règles, discord, vote…)
     usage: /<command> [sujet]
     aliases: [rules, regles, discord, vote, store, boutique, website]
+  rtp:
+    description: Se téléporter à un endroit aléatoire et sûr
+    usage: /<command> [joueur]
+  enderchest:
+    description: Ouvrir un coffre de l'Ender
+    usage: /<command> [joueur]
+    aliases: [ec]
+  freeze:
+    description: Geler ou dégeler un joueur (contrôle du staff)
+    usage: /<command> <joueur> [message]
+  unfreeze:
+    description: Dégeler un joueur (même hors ligne)
+    usage: /<command> <joueur>
+  mute:
+    description: Rendre un joueur muet
+    usage: /<command> <joueur> [durée] [motif]
+  unmute:
+    description: Redonner la parole à un joueur
+    usage: /<command> <joueur>
+  warn:
+    description: Avertir un joueur (titre, message et son)
+    usage: /<command> <joueur> <motif>
+  warns:
+    description: Voir le nombre d'avertissements d'un joueur
+    usage: /<command> <joueur>
+  alert:
+    description: Afficher un message à l'écran d'un joueur ou de tous
+    usage: /<command> <joueur|*> <message>
 
 permissions:
   ultimatecore.use:
@@ -190,3 +218,31 @@ permissions:
     default: op
   ultimatecore.info:
     default: true
+  ultimatecore.rtp:
+    default: true
+  ultimatecore.rtp.others:
+    default: op
+  ultimatecore.rtp.bypass:
+    description: Pas de temps de recharge pour /rtp
+    default: op
+  ultimatecore.ec:
+    default: op
+  ultimatecore.ec.others:
+    default: op
+  ultimatecore.freeze:
+    default: op
+  ultimatecore.freeze.bypass:
+    description: Ne peut pas être gelé
+    default: op
+  ultimatecore.mute:
+    default: op
+  ultimatecore.mute.bypass:
+    description: Ne peut pas être rendu muet
+    default: op
+  ultimatecore.warn:
+    default: op
+  ultimatecore.alert:
+    default: op
+  ultimatecore.staff.notify:
+    description: Reçoit les notifications du staff (gel, mute, avertissement)
+    default: op

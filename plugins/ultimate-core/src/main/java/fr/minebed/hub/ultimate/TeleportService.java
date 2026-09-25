@@ -45,6 +45,11 @@ public final class TeleportService {
      * @param applyRules {@code false} pour téléporter tout de suite, sans délai ni temps de recharge (commande de l'administrateur)
      */
     public void teleport(final Player player, final Location target, boolean applyRules, final Msg success, final Object... successPairs) {
+        teleportThen(player, target, applyRules, null, success, successPairs);
+    }
+
+    /** Comme {@link #teleport}, avec une action lancée seulement si le joueur est bien arrivé (temps de recharge d'une commande, par exemple). */
+    public void teleportThen(final Player player, final Location target, boolean applyRules, final Runnable afterSuccess, final Msg success, final Object... successPairs) {
         final UUID id = player.getUniqueId();
         boolean bypass = !applyRules || player.hasPermission(BYPASS);
         if (!bypass) {
@@ -60,7 +65,7 @@ public final class TeleportService {
         }
         int warmup = bypass ? 0 : Math.max(0, ctx.config().getInt("teleport.warmup-seconds", 3));
         if (warmup == 0) {
-            go(player, target, bypass, success, successPairs);
+            go(player, target, bypass, afterSuccess, success, successPairs);
             return;
         }
         ctx.messages.send(player, Msg.TP_WARMUP, "seconds", String.valueOf(warmup));
@@ -82,7 +87,7 @@ public final class TeleportService {
                 }
                 ticksLeft[0] -= 10;
                 if (ticksLeft[0] <= 0) {
-                    go(player, target, false, success, successPairs);
+                    go(player, target, false, afterSuccess, success, successPairs);
                 } else {
                     ctx.scheduler.runForEntityLater(player, step[0], new Runnable() {
                         @Override
@@ -101,7 +106,7 @@ public final class TeleportService {
         }, 10);
     }
 
-    private void go(final Player player, Location target, final boolean bypass, final Msg success, final Object[] successPairs) {
+    private void go(final Player player, Location target, final boolean bypass, final Runnable afterSuccess, final Msg success, final Object[] successPairs) {
         final UUID id = player.getUniqueId();
         Location from = player.getLocation();
         for (BiConsumer<Player, Location> listener : departureListeners) {
@@ -115,6 +120,9 @@ public final class TeleportService {
                     @Override
                     public void run() {
                         if (ok) {
+                            if (afterSuccess != null) {
+                                afterSuccess.run();
+                            }
                             if (!bypass) {
                                 long seconds = Math.max(0, ctx.config().getLong("teleport.cooldown-seconds", 5));
                                 if (seconds > 0) {

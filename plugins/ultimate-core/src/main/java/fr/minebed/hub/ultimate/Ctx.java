@@ -74,6 +74,17 @@ public final class Ctx {
         return match;
     }
 
+    /** Prévient les membres du staff en ligne (permission « ultimatecore.staff.notify ») et la console. */
+    public void notifyStaff(String text) {
+        String line = messages.raw(Msg.PREFIX) + messages.raw(Msg.STAFF_NOTIFY, "message", text);
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.hasPermission("ultimatecore.staff.notify")) {
+                p.sendMessage(line);
+            }
+        }
+        Bukkit.getConsoleSender().sendMessage(line);
+    }
+
     public boolean moduleEnabled(String id) {
         return config().getBoolean("modules." + id, true);
     }
