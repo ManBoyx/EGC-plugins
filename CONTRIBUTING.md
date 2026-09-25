@@ -32,6 +32,9 @@ git clone <ce dépôt> && cd EGC-plugins
 2. Ajoutez-la dans `lang/fr.yml` **et** `lang/en.yml`, avec les mêmes `{jetons}`.
 3. `./gradlew :plugins:ultimate-core:test` vérifie la cohérence (`ResourcesTest`).
 
+   Piège YAML : ne nommez jamais une clé `on`, `off`, `yes`, `no`, `y` ou `n` : YAML 1.1 les lit comme des booléens (`true`/`false`)
+   et le message devient introuvable. Écrivez `enabled`/`disabled`, ou mettez la clé entre guillemets.
+
 ## Ajouter une commande
 
 1. Déclarez-la dans `plugin.yml` (description, usage) et ses permissions.

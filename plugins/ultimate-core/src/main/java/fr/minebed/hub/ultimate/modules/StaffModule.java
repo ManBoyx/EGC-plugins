@@ -7,6 +7,7 @@ import fr.minebed.hub.ultimate.AbstractModule;
 import fr.minebed.hub.ultimate.BaseCommand;
 import fr.minebed.hub.ultimate.Ctx;
 import fr.minebed.hub.ultimate.Msg;
+import fr.minebed.hub.ultimate.TeleportService;
 import fr.minebed.hub.ultimate.logic.SanctionArgs;
 import fr.minebed.hub.ultimate.util.DataStore;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -28,7 +30,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 /**
- * Outils du staff : /mute et /unmute (avec durée et motif, conservés d'un redémarrage à l'autre), /warn et /warns
+ * Outils du staff : /tphere (ramène un joueur auprès de soi), /mute et /unmute (avec durée et motif, conservés d'un redémarrage à l'autre), /warn et /warns
  * (avertissements comptés, avec des actions configurables à certains seuils), /alert (message à l'écran d'un joueur ou de tous).
  * Les autres membres du staff sont prévenus. Les sanctions visent des joueurs en ligne ; pour les bannissements, voir LibertyBans.
  */
@@ -51,8 +53,11 @@ public final class StaffModule extends AbstractModule implements Listener {
     private DataStore warnStore;
     private final Object warnLock = new Object();
 
-    public StaffModule(Ctx ctx) {
+    private final TeleportService teleports;
+
+    public StaffModule(Ctx ctx, TeleportService teleports) {
         super(ctx);
+        this.teleports = teleports;
     }
 
     @Override
@@ -196,6 +201,42 @@ public final class StaffModule extends AbstractModule implements Listener {
                     return true;
                 }
                 ctx.messages.send(sender, Msg.WARN_COUNT, "player", name, "count", String.valueOf(warnStore.getLong("warns." + id + ".count", 0)));
+                return true;
+            }
+
+            @Override
+            protected List<String> complete(CommandSender sender, String[] args) {
+                return args.length == 1 ? onlineNames(args[0]) : Collections.<String>emptyList();
+            }
+        });
+        command("tphere", new BaseCommand(ctx, "ultimatecore.tphere") {
+            @Override
+            protected boolean execute(CommandSender sender, String label, String[] args) {
+                Player me = requirePlayer(sender);
+                if (me == null) {
+                    return true;
+                }
+                if (args.length != 1) {
+                    return false;
+                }
+                final Player target = requireOnline(me, args[0]);
+                if (target == null) {
+                    return true;
+                }
+                if (target.getUniqueId().equals(me.getUniqueId())) {
+                    ctx.messages.send(me, Msg.TPA_SELF);
+                    return true;
+                }
+                // Ordre du staff : ni attente, ni temps de recharge. La position est lue ici, dans le fil de celui qui donne l'ordre.
+                final Location where = me.getLocation();
+                final String staff = me.getName();
+                ctx.runOnPlayer(target, new Runnable() {
+                    @Override
+                    public void run() {
+                        teleports.teleport(target, where, false, Msg.TPHERE_TARGET, "player", staff);
+                    }
+                });
+                ctx.messages.send(me, Msg.TPHERE_DONE, "player", target.getName());
                 return true;
             }
 

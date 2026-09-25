@@ -18,6 +18,7 @@ import fr.minebed.hub.ultimate.modules.SpawnModule;
 import fr.minebed.hub.ultimate.modules.StaffModule;
 import fr.minebed.hub.ultimate.modules.TpaModule;
 import fr.minebed.hub.ultimate.modules.UtilityModule;
+import fr.minebed.hub.ultimate.modules.VanishModule;
 import fr.minebed.hub.ultimate.modules.WarpsModule;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,7 +121,8 @@ public final class UltimatePlugin extends JavaPlugin {
         wanted.add(new RtpModule(ctx, teleports));
         wanted.add(new EnderChestModule(ctx));
         wanted.add(new FreezeModule(ctx));
-        wanted.add(new StaffModule(ctx));
+        wanted.add(new StaffModule(ctx, teleports));
+        wanted.add(new VanishModule(ctx));
         for (Module module : wanted) {
             if (!ctx.moduleEnabled(module.id())) {
                 continue;

@@ -152,6 +152,12 @@ public enum Msg {
     WARN_TITLE("warn.title"),
     WARN_TARGET("warn.target"),
     WARN_COUNT("warn.count"),
+    TPHERE_DONE("tphere.done"),
+    TPHERE_TARGET("tphere.target"),
+    VANISH_ON("vanish.enabled"),
+    VANISH_OFF("vanish.disabled"),
+    VANISH_STILL("vanish.still"),
+    VANISH_REMINDER("vanish.reminder"),
     ALERT_LINE("alert.line"),
     ALERT_TITLE("alert.title"),
 

@@ -159,3 +159,11 @@ warn:
 alert:
   line: "&c[Alert] &f{message}"
   title: "&c&lALERT"
+tphere:
+  done: "&f{player}&a was teleported to you."
+  target: "&aYou were teleported to &f{player}&a."
+vanish:
+  enabled: "&aYou are now invisible to other players."
+  disabled: "&7You are visible again."
+  still: "&7You are still invisible (vanish)."
+  reminder: "&7Vanish on: other players cannot see you"

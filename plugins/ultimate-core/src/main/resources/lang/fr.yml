@@ -159,3 +159,11 @@ warn:
 alert:
   line: "&c[Alerte] &f{message}"
   title: "&c&lALERTE"
+tphere:
+  done: "&f{player}&a a été téléporté auprès de vous."
+  target: "&aVous avez été téléporté auprès de &f{player}&a."
+vanish:
+  enabled: "&aVous êtes invisible pour les autres joueurs."
+  disabled: "&7Vous êtes de nouveau visible."
+  still: "&7Vous êtes toujours invisible (vanish)."
+  reminder: "&7Vanish actif : les autres joueurs ne vous voient pas"

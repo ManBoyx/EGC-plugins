@@ -136,6 +136,13 @@ commands:
   alert:
     description: Afficher un message à l'écran d'un joueur ou de tous
     usage: /<command> <joueur|*> <message>
+  tphere:
+    description: Téléporter un joueur auprès de soi (ordre du staff)
+    usage: /<command> <joueur>
+  vanish:
+    description: Devenir invisible pour les autres joueurs
+    usage: /<command> [joueur]
+    aliases: [v]
 
 permissions:
   ultimatecore.use:
@@ -245,4 +252,13 @@ permissions:
     default: op
   ultimatecore.staff.notify:
     description: Reçoit les notifications du staff (gel, mute, avertissement)
+    default: op
+  ultimatecore.tphere:
+    default: op
+  ultimatecore.vanish:
+    default: op
+  ultimatecore.vanish.others:
+    default: op
+  ultimatecore.vanish.see:
+    description: Voit les joueurs invisibles (vanish)
     default: op

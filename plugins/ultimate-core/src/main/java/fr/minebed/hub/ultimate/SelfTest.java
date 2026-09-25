@@ -81,6 +81,7 @@ final class SelfTest {
         String hex = ColorCodes.translate("&#ff8800Orange &aVert", ctx.platform.supportsHexColors());
         check(sender, "couleurs (hexadécimales " + (ctx.platform.supportsHexColors() ? "natives" : "converties") + ")", hex.indexOf('§') >= 0 && hex.indexOf('&') < 0);
 
+        check(sender, "cacher un joueur possible (hidePlayer, ancienne ou nouvelle signature)", fr.minebed.hub.compat.PlayerCompat.canHidePlayers());
         check(sender, "fichiers de données (écriture, relecture)", dataStoreRoundTrip());
 
         List<String> unbound = new ArrayList<String>();

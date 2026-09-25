@@ -25,6 +25,7 @@ modules:
   enderchest: true
   freeze: true
   staff: true
+  vanish: true
 
 teleport:
   warmup-seconds: 3            # attente avant la téléportation (0 = immédiat)
@@ -133,3 +134,9 @@ mute:
 #     5: ["kick {player} Trop d'avertissements"]
 warn:
   actions: {}
+
+# Invisibilité du staff : /vanish [joueur]. Le staff avec ultimatecore.vanish.see voit les joueurs invisibles.
+vanish:
+  remind-seconds: 5            # rappel dans la barre d'action du joueur invisible (0 = aucun)
+  fake-messages: false         # true : faux message de départ/d'arrivée quand on devient invisible/visible
+  protect: true                # les monstres ne le ciblent plus, il ne déclenche plus de plaque de pression
